@@ -38,9 +38,9 @@ public class Turno implements Serializable {
     @Column(name = "FECHA")
     private Date fecha;
 
-    @Temporal(TemporalType.TIME)
-    @Column(name = "HORA")
-    private Date hora;
+    @ManyToOne
+    @JoinColumn(name = "fk_hora_turno")
+    private HorarioAtencionTurno unaHoraTurno;
 
     @ManyToOne(cascade=CascadeType.REMOVE)
     @JoinColumn(name = "fk_persona")
@@ -114,13 +114,6 @@ public class Turno implements Serializable {
         this.fecha = fecha;
     }
 
-    public Date getHora() {
-        return hora;
-    }
-
-    public void setHora(Date hora) {
-        this.hora = hora;
-    }
 
     public Persona getUnaPersona() {
         return unaPersona;
@@ -162,5 +155,14 @@ public class Turno implements Serializable {
         this.unTipoTramite = unTipoTramite;
     }
 
+    public HorarioAtencionTurno getUnaHoraTurno() {
+        return unaHoraTurno;
+    }
+
+    public void setUnaHoraTurno(HorarioAtencionTurno unaHoraTurno) {
+        this.unaHoraTurno = unaHoraTurno;
+    }
+
+    
     
 }

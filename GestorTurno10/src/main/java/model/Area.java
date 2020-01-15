@@ -53,10 +53,10 @@ public class Area implements Serializable {
 
     @JoinTable(
             name = "rel_Tipo_Tramite_Area",
-            joinColumns = @JoinColumn(name = "FK_Tipo_Tramite", nullable = false),
-            inverseJoinColumns = @JoinColumn(name = "FK_Area", nullable = false)
+            joinColumns = @JoinColumn(name = "FK_Area"),
+            inverseJoinColumns = @JoinColumn(name = "FK_Tipo_Tramite")
     )
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     private List<TipoTramite> tipoTramite;
 
     public Area() {

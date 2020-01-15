@@ -15,7 +15,6 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import model.RequisitoOpcional;
-import model.Tramite;
 
 /**
  *
@@ -37,16 +36,7 @@ public class RequisitoOpcionalJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Tramite unTramite = requisitoOpcional.getUnTramite();
-            if (unTramite != null) {
-                unTramite = em.getReference(unTramite.getClass(), unTramite.getId());
-                requisitoOpcional.setUnTramite(unTramite);
-            }
             em.persist(requisitoOpcional);
-            if (unTramite != null) {
-                unTramite.getRequisitoOpcional().add(requisitoOpcional);
-                unTramite = em.merge(unTramite);
-            }
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -60,22 +50,7 @@ public class RequisitoOpcionalJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            RequisitoOpcional persistentRequisitoOpcional = em.find(RequisitoOpcional.class, requisitoOpcional.getId());
-            Tramite unTramiteOld = persistentRequisitoOpcional.getUnTramite();
-            Tramite unTramiteNew = requisitoOpcional.getUnTramite();
-            if (unTramiteNew != null) {
-                unTramiteNew = em.getReference(unTramiteNew.getClass(), unTramiteNew.getId());
-                requisitoOpcional.setUnTramite(unTramiteNew);
-            }
             requisitoOpcional = em.merge(requisitoOpcional);
-            if (unTramiteOld != null && !unTramiteOld.equals(unTramiteNew)) {
-                unTramiteOld.getRequisitoOpcional().remove(requisitoOpcional);
-                unTramiteOld = em.merge(unTramiteOld);
-            }
-            if (unTramiteNew != null && !unTramiteNew.equals(unTramiteOld)) {
-                unTramiteNew.getRequisitoOpcional().add(requisitoOpcional);
-                unTramiteNew = em.merge(unTramiteNew);
-            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -104,11 +79,6 @@ public class RequisitoOpcionalJpaController implements Serializable {
                 requisitoOpcional.getId();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The requisitoOpcional with id " + id + " no longer exists.", enfe);
-            }
-            Tramite unTramite = requisitoOpcional.getUnTramite();
-            if (unTramite != null) {
-                unTramite.getRequisitoOpcional().remove(requisitoOpcional);
-                unTramite = em.merge(unTramite);
             }
             em.remove(requisitoOpcional);
             em.getTransaction().commit();

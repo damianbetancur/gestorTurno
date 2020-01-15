@@ -12,13 +12,12 @@
     <class>model.TipoAtencion</class>
     <class>model.TipoEmpleado</class>
     <class>model.TipoPersona</class>
-    <class>model.TipoRequisitoObligatorio</class>
-    <class>model.TipoRequisitoOpcional</class>
     <class>model.TipoTramite</class>
+    <class>model.TipoUsuario</class>
     <class>model.Tramite</class>
     <class>model.Turno</class>
-    <class>model.TipoUsuario</class>
     <class>model.Usuario</class>
+    <class>model.HorarioAtencionTurno</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/turnos01?serverTimezone=UTC"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

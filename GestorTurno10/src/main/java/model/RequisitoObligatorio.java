@@ -25,13 +25,7 @@ public class RequisitoObligatorio implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "fk_tramite", nullable = false, updatable = false)
-    private Tramite unTramite;
-
-    @ManyToOne
-    @JoinColumn(name = "fk_tipo_requisito_obligatorio")
-    private TipoRequisitoObligatorio unTipoRequisitoObligatorio;
+    private String nombre;
 
     public RequisitoObligatorio() {
     }
@@ -69,22 +63,12 @@ public class RequisitoObligatorio implements Serializable {
         return "model.RequisitoObligatorio[ id=" + id + " ]";
     }
 
-    public Tramite getUnTramite() {
-        return unTramite;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setUnTramite(Tramite unTramite) {
-        this.unTramite = unTramite;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
-
-    public TipoRequisitoObligatorio getUnTipoRequisitoObligatorio() {
-        return unTipoRequisitoObligatorio;
-    }
-
-    public void setUnTipoRequisitoObligatorio(TipoRequisitoObligatorio unTipoRequisitoObligatorio) {
-        this.unTipoRequisitoObligatorio = unTipoRequisitoObligatorio;
-    }
-
-  
 
 }

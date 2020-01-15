@@ -61,7 +61,7 @@ public class TipoAtencion implements Serializable {
 
     @Override
     public String toString() {
-        return "model.TipoAtencion[ id=" + id + " ]";
+        return getNombre();
     }
 
     public String getNombre() {

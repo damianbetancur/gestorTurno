@@ -54,12 +54,10 @@ public class PanelOrganismo extends javax.swing.JPanel implements InterfacePanel
 
         setMaximumSize(new java.awt.Dimension(950, 750));
         setMinimumSize(new java.awt.Dimension(950, 750));
-        setLayout(null);
+        setPreferredSize(new java.awt.Dimension(950, 750));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel2.setText("Razon Social:");
-        add(jLabel2);
-        jLabel2.setBounds(70, 50, 170, 30);
 
         jbtn_volver.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         jbtn_volver.setText("VOLVER");
@@ -68,36 +66,68 @@ public class PanelOrganismo extends javax.swing.JPanel implements InterfacePanel
                 jbtn_volverActionPerformed(evt);
             }
         });
-        add(jbtn_volver);
-        jbtn_volver.setBounds(70, 653, 720, 60);
 
         jtf_razonSocial.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jtf_razonSocial.setEnabled(false);
         jtf_razonSocial.setFocusable(false);
-        add(jtf_razonSocial);
-        jtf_razonSocial.setBounds(260, 50, 530, 30);
 
         jtf_direccion.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jtf_direccion.setEnabled(false);
         jtf_direccion.setFocusable(false);
-        add(jtf_direccion);
-        jtf_direccion.setBounds(260, 120, 530, 30);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel3.setText("Dirección:");
-        add(jLabel3);
-        jLabel3.setBounds(70, 120, 170, 30);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel4.setText("Teléfono:");
-        add(jLabel4);
-        jLabel4.setBounds(70, 190, 170, 30);
 
         jtf_telefono.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jtf_telefono.setEnabled(false);
         jtf_telefono.setFocusable(false);
-        add(jtf_telefono);
-        jtf_telefono.setBounds(260, 190, 530, 30);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(70, 70, 70)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jbtn_volver, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 850, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(30, 30, 30)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(30, 30, 30)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jtf_telefono, javax.swing.GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
+                            .addComponent(jtf_direccion)
+                            .addComponent(jtf_razonSocial)))))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtf_razonSocial, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(40, 40, 40)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtf_direccion, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(40, 40, 40)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtf_telefono, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(433, 433, 433)
+                .addComponent(jbtn_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtn_volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_volverActionPerformed
@@ -108,7 +138,9 @@ public class PanelOrganismo extends javax.swing.JPanel implements InterfacePanel
         limpiarTodosLosCampos();
         
         //Habilita el Arbol de seleccion
-        JFramePrincipal.habilitarArbol(true);
+        JFramePrincipal.getArbolModulos().setEnabled(true);
+        JFramePrincipal.getjPanelContenido().removeAll();
+        JFramePrincipal.getjPanelContenido().repaint();
     }//GEN-LAST:event_jbtn_volverActionPerformed
 
 

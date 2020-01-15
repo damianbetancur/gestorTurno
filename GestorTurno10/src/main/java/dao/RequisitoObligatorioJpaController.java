@@ -15,7 +15,6 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import model.RequisitoObligatorio;
-import model.Tramite;
 
 /**
  *
@@ -37,16 +36,7 @@ public class RequisitoObligatorioJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Tramite unTramite = requisitoObligatorio.getUnTramite();
-            if (unTramite != null) {
-                unTramite = em.getReference(unTramite.getClass(), unTramite.getId());
-                requisitoObligatorio.setUnTramite(unTramite);
-            }
             em.persist(requisitoObligatorio);
-            if (unTramite != null) {
-                unTramite.getRequisitoObligatorio().add(requisitoObligatorio);
-                unTramite = em.merge(unTramite);
-            }
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -60,22 +50,7 @@ public class RequisitoObligatorioJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            RequisitoObligatorio persistentRequisitoObligatorio = em.find(RequisitoObligatorio.class, requisitoObligatorio.getId());
-            Tramite unTramiteOld = persistentRequisitoObligatorio.getUnTramite();
-            Tramite unTramiteNew = requisitoObligatorio.getUnTramite();
-            if (unTramiteNew != null) {
-                unTramiteNew = em.getReference(unTramiteNew.getClass(), unTramiteNew.getId());
-                requisitoObligatorio.setUnTramite(unTramiteNew);
-            }
             requisitoObligatorio = em.merge(requisitoObligatorio);
-            if (unTramiteOld != null && !unTramiteOld.equals(unTramiteNew)) {
-                unTramiteOld.getRequisitoObligatorio().remove(requisitoObligatorio);
-                unTramiteOld = em.merge(unTramiteOld);
-            }
-            if (unTramiteNew != null && !unTramiteNew.equals(unTramiteOld)) {
-                unTramiteNew.getRequisitoObligatorio().add(requisitoObligatorio);
-                unTramiteNew = em.merge(unTramiteNew);
-            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -104,11 +79,6 @@ public class RequisitoObligatorioJpaController implements Serializable {
                 requisitoObligatorio.getId();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The requisitoObligatorio with id " + id + " no longer exists.", enfe);
-            }
-            Tramite unTramite = requisitoObligatorio.getUnTramite();
-            if (unTramite != null) {
-                unTramite.getRequisitoObligatorio().remove(requisitoObligatorio);
-                unTramite = em.merge(unTramite);
             }
             em.remove(requisitoObligatorio);
             em.getTransaction().commit();

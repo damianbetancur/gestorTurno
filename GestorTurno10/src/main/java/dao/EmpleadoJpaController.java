@@ -100,7 +100,7 @@ public class EmpleadoJpaController implements Serializable {
                 unAreaANew = em.getReference(unAreaANew.getClass(), unAreaANew.getId());
                 empleado.setUnAreaA(unAreaANew);
             }
-            List<TipoTramite> attachedTipoTramiteNew = new ArrayList<>();
+            List<TipoTramite> attachedTipoTramiteNew = new ArrayList<TipoTramite>();
             for (TipoTramite tipoTramiteNewTipoTramiteToAttach : tipoTramiteNew) {
                 tipoTramiteNewTipoTramiteToAttach = em.getReference(tipoTramiteNewTipoTramiteToAttach.getClass(), tipoTramiteNewTipoTramiteToAttach.getId());
                 attachedTipoTramiteNew.add(tipoTramiteNewTipoTramiteToAttach);

@@ -13,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -35,9 +36,13 @@ public class TipoTramite implements Serializable {
     @ManyToMany(mappedBy = "tipoTramite")
     private List<Empleado> empleados;
 
+    @OneToMany
+    private List<RequisitoObligatorio> requisitosObligatorios;
+
     public TipoTramite() {
         this.areas = new ArrayList<>();
         this.empleados = new ArrayList<>();
+        this.requisitosObligatorios = new ArrayList<>();
     }
 
     public Long getId() {
@@ -70,7 +75,7 @@ public class TipoTramite implements Serializable {
 
     @Override
     public String toString() {
-        return "model.TipoTramite[ id=" + id + " ]";
+        return getNombre();
     }
 
     public String getCodigo() {
@@ -105,5 +110,4 @@ public class TipoTramite implements Serializable {
         this.empleados = empleados;
     }
 
-    
 }

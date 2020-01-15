@@ -52,10 +52,10 @@ public class Tramite implements Serializable {
     @JoinColumn(name = "fk_Turno")
     private Turno unTurno;
 
-    @OneToMany(mappedBy = "unTramite")
+    @OneToMany
     private List<RequisitoObligatorio> requisitoObligatorio;
 
-    @OneToMany(mappedBy = "unTramite")
+    @OneToMany
     private List<RequisitoOpcional> requisitoOpcional;
 
     public Tramite() {

@@ -8,6 +8,8 @@ package view;
 import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Calendar;
+import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
@@ -151,14 +153,14 @@ public class ValidadorDeCampos {
      * @param colorBotonDesactivo
      * @param colorTextoDesactivo
      */
-    public void habilitarBoton(boolean estado, JButton unBoton, Color colorBotonActivo,Color colorTextoActivo, Color colorBotonDesactivo, Color colorTextoDesactivo) {
-        
-        if (estado) {            
+    public void habilitarBoton(boolean estado, JButton unBoton, Color colorBotonActivo, Color colorTextoActivo, Color colorBotonDesactivo, Color colorTextoDesactivo) {
+
+        if (estado) {
             unBoton.setBackground(colorBotonActivo);
             unBoton.setForeground(colorTextoActivo);
             unBoton.setEnabled(estado);
-        }else{
-            unBoton.setBackground(colorBotonDesactivo);            
+        } else {
+            unBoton.setBackground(colorBotonDesactivo);
             unBoton.setForeground(colorTextoDesactivo);
             unBoton.setEnabled(estado);
         }
@@ -181,5 +183,50 @@ public class ValidadorDeCampos {
      */
     public void limpiarCombobox(JComboBox unComboBox) {
         unComboBox.removeAllItems();
+    }
+
+    /**
+     * calcularFechaTurno Calcula la edad en funcion a la fechaDenacimiento ingresada
+     *
+     * @param fechaDeTurno
+     * @return
+     */
+    public boolean calcularFechaTurno(Date fechaDeTurno) {
+        boolean turnoValido = false;
+        Calendar calendario = Calendar.getInstance(); // fecha actual
+        int anioDeHoy = calendario.get(Calendar.YEAR);
+        int mesDeHoy = calendario.get(Calendar.MONTH);
+        int diaDeHoy = calendario.get(Calendar.DAY_OF_MONTH);
+
+        calendario.setTime(fechaDeTurno); // fecha de turno
+        int anioDeTurno = calendario.get(Calendar.YEAR);
+        int mesDeTurno = calendario.get(Calendar.MONTH);
+        int diaTurno = calendario.get(Calendar.DAY_OF_MONTH);
+
+        if (anioDeTurno >= anioDeHoy) {
+            turnoValido = true;
+        }else{
+            turnoValido = false;
+        }
+
+        if (anioDeTurno == anioDeHoy) {
+            if (mesDeTurno > mesDeHoy) {
+                turnoValido = true;
+            }else{
+                turnoValido = false;
+            }
+        }
+        
+        if (anioDeTurno == anioDeHoy) {
+            if (mesDeTurno == mesDeHoy) {
+                if (diaTurno>=diaDeHoy) {
+                    turnoValido = true;
+                }else{
+                    turnoValido = false;
+                }
+            }
+        }
+
+        return turnoValido;
     }
 }

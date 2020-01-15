@@ -9,30 +9,37 @@ import controller.LoginController;
 import java.awt.BorderLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.tree.TreePath;
 import model.TipoUsuario;
 
 /**
  *
  * @author Ariel
  */
-public class JFramePrincipal extends javax.swing.JFrame{
-
-    private TipoUsuario tipoUsuario = null;
+public class JFramePrincipal extends javax.swing.JFrame {
 
     public static javax.swing.JPanel getjPanelArbol() {
         return jPanelArbol;
     }
 
-    public static void setjPanelArbol(javax.swing.JPanel ajPanelArbol) {
-        jPanelArbol = ajPanelArbol;
+    public static javax.swing.JPanel getjPanelContenido() {
+        return jPanelContenido;
     }
 
-    /**
-     * Creates new form PersonaView
-     */
-    private static PanelArbolAdministrador unPanelArbolAdministrador = null;
-    private static PanelContenedor unPanelContenedor = null;
+    public static javax.swing.JTree getArbolModulos() {
+        return arbolModulos;
+    }
 
+    private TipoUsuario tipoUsuario = null;
+
+    /**
+     * captura la seleccion en el arbol
+     */
+    String captura = null;
+
+    /**
+     * Creates new form JFramePrincipal
+     */
     public JFramePrincipal() {
         //Carga Icono de la empresa
         try {
@@ -42,6 +49,7 @@ public class JFramePrincipal extends javax.swing.JFrame{
         } catch (Exception e) {
         }
         initComponents();
+        this.setSize(1200, 750);
     }
 
     /**
@@ -53,119 +61,296 @@ public class JFramePrincipal extends javax.swing.JFrame{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        JpanelContenedor = new javax.swing.JPanel();
-        jPanelContenido = new javax.swing.JPanel();
-        jPanelArbol = new javax.swing.JPanel();
-        jpanel_Usuario = new javax.swing.JPanel();
+        jScrollPaneArbol = new javax.swing.JScrollPane();
+        jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jlbl_usuario = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         jlbl_TipoUsuario = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jlbl_puesto = new javax.swing.JLabel();
 
-        jButton1.setText("jButton1");
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("El Porvenir");
-        setMaximumSize(new java.awt.Dimension(1200, 800));
-        setMinimumSize(new java.awt.Dimension(1200, 800));
-        setPreferredSize(new java.awt.Dimension(1200, 800));
+        setMaximumSize(new java.awt.Dimension(1330, 850));
+        setMinimumSize(new java.awt.Dimension(1330, 850));
+        setPreferredSize(new java.awt.Dimension(1330, 850));
         setResizable(false);
 
-        JpanelContenedor.setBackground(new java.awt.Color(0, 153, 153));
-        JpanelContenedor.setMaximumSize(new java.awt.Dimension(1200, 791));
-        JpanelContenedor.setPreferredSize(new java.awt.Dimension(1200, 791));
-        JpanelContenedor.setLayout(null);
-
-        jPanelContenido.setBackground(new java.awt.Color(204, 204, 204));
-        jPanelContenido.setForeground(new java.awt.Color(204, 204, 204));
-        jPanelContenido.setMinimumSize(new java.awt.Dimension(950, 750));
-        jPanelContenido.setPreferredSize(new java.awt.Dimension(950, 750));
-        jPanelContenido.setRequestFocusEnabled(false);
-        jPanelContenido.setLayout(null);
-        JpanelContenedor.add(jPanelContenido);
-        jPanelContenido.setBounds(350, 0, 850, 750);
-
-        jPanelArbol.setBackground(new java.awt.Color(153, 255, 153));
-        jPanelArbol.setAutoscrolls(true);
-        jPanelArbol.setMaximumSize(new java.awt.Dimension(350, 1200));
+        jPanelArbol.setBackground(new java.awt.Color(255, 153, 51));
+        jPanelArbol.setMaximumSize(new java.awt.Dimension(350, 750));
         jPanelArbol.setMinimumSize(new java.awt.Dimension(350, 750));
         jPanelArbol.setPreferredSize(new java.awt.Dimension(350, 750));
-        jPanelArbol.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                jPanelArbolAncestorAdded(evt);
-            }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+
+        jScrollPaneArbol.setAlignmentX(0.0F);
+        jScrollPaneArbol.setAlignmentY(0.0F);
+        jScrollPaneArbol.setMaximumSize(new java.awt.Dimension(350, 750));
+        jScrollPaneArbol.setMinimumSize(new java.awt.Dimension(350, 750));
+        jScrollPaneArbol.setPreferredSize(new java.awt.Dimension(350, 750));
+
+        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("El Porvenir");
+        javax.swing.tree.DefaultMutableTreeNode treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Administración General");
+        javax.swing.tree.DefaultMutableTreeNode treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Organismo");
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Personas");
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Empleados");
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Usuarios");
+        treeNode2.add(treeNode3);
+        treeNode1.add(treeNode2);
+        treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Gestión de Turnos");
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Asignar Turno");
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Reasignar Turno");
+        treeNode2.add(treeNode3);
+        treeNode1.add(treeNode2);
+        treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Gestion de Tramite");
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Procesar Tramite");
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Ver cantidad de Tramites por Area");
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Ver cantidad deTipo de tramite por Area");
+        treeNode2.add(treeNode3);
+        treeNode1.add(treeNode2);
+        arbolModulos.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        arbolModulos.setAlignmentX(0.0F);
+        arbolModulos.setAlignmentY(0.0F);
+        arbolModulos.setMaximumSize(new java.awt.Dimension(330, 750));
+        arbolModulos.setMinimumSize(new java.awt.Dimension(330, 750));
+        arbolModulos.setName(""); // NOI18N
+        arbolModulos.setPreferredSize(new java.awt.Dimension(330, 750));
+        arbolModulos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                arbolModulosMouseClicked(evt);
             }
         });
-        jPanelArbol.setLayout(null);
-        JpanelContenedor.add(jPanelArbol);
-        jPanelArbol.setBounds(0, 0, 350, 750);
+        jScrollPaneArbol.setViewportView(arbolModulos);
 
-        jpanel_Usuario.setLayout(null);
+        javax.swing.GroupLayout jPanelArbolLayout = new javax.swing.GroupLayout(jPanelArbol);
+        jPanelArbol.setLayout(jPanelArbolLayout);
+        jPanelArbolLayout.setHorizontalGroup(
+            jPanelArbolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelArbolLayout.createSequentialGroup()
+                .addComponent(jScrollPaneArbol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanelArbolLayout.setVerticalGroup(
+            jPanelArbolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelArbolLayout.createSequentialGroup()
+                .addComponent(jScrollPaneArbol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
 
+        jPanelContenido.setBackground(new java.awt.Color(153, 255, 204));
+        jPanelContenido.setAlignmentX(0.0F);
+        jPanelContenido.setAlignmentY(0.0F);
+        jPanelContenido.setAutoscrolls(true);
+        jPanelContenido.setMaximumSize(new java.awt.Dimension(950, 750));
+        jPanelContenido.setMinimumSize(new java.awt.Dimension(950, 750));
+        jPanelContenido.setName(""); // NOI18N
+        jPanelContenido.setPreferredSize(new java.awt.Dimension(950, 750));
+
+        javax.swing.GroupLayout jPanelContenidoLayout = new javax.swing.GroupLayout(jPanelContenido);
+        jPanelContenido.setLayout(jPanelContenidoLayout);
+        jPanelContenidoLayout.setHorizontalGroup(
+            jPanelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 950, Short.MAX_VALUE)
+        );
+        jPanelContenidoLayout.setVerticalGroup(
+            jPanelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 750, Short.MAX_VALUE)
+        );
+
+        jPanel3.setBackground(new java.awt.Color(0, 204, 204));
+        jPanel3.setMaximumSize(new java.awt.Dimension(1342, 60));
+        jPanel3.setMinimumSize(new java.awt.Dimension(1342, 60));
+        jPanel3.setPreferredSize(new java.awt.Dimension(1342, 60));
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("USUARIO:");
-        jpanel_Usuario.add(jLabel1);
-        jLabel1.setBounds(10, 0, 60, 20);
-        jpanel_Usuario.add(jlbl_usuario);
-        jlbl_usuario.setBounds(80, 0, 150, 20);
-        jpanel_Usuario.add(jlbl_TipoUsuario);
-        jlbl_TipoUsuario.setBounds(340, 0, 180, 20);
 
-        jLabel4.setText("TIPO USUARIO:");
-        jpanel_Usuario.add(jLabel4);
-        jLabel4.setBounds(250, 0, 90, 20);
+        jlbl_usuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
-        jLabel2.setText("PUESTO:");
-        jpanel_Usuario.add(jLabel2);
-        jLabel2.setBounds(560, 0, 60, 20);
-        jpanel_Usuario.add(jlbl_puesto);
-        jlbl_puesto.setBounds(650, 0, 350, 20);
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel3.setText("TIPO USUARIO");
 
-        JpanelContenedor.add(jpanel_Usuario);
-        jpanel_Usuario.setBounds(0, 750, 1200, 20);
+        jlbl_TipoUsuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel5.setText("TIPO EMPLEADO");
+
+        jlbl_puesto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jlbl_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jlbl_TipoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addComponent(jlbl_puesto, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jlbl_usuario, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jlbl_puesto, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+                        .addComponent(jlbl_TipoUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(JpanelContenedor, javax.swing.GroupLayout.PREFERRED_SIZE, 1200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanelArbol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanelContenido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(JpanelContenedor, javax.swing.GroupLayout.PREFERRED_SIZE, 791, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanelArbol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanelContenido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jPanelArbolAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jPanelArbolAncestorAdded
-        jPanelContenido.repaint();
-        jPanelArbol.repaint();
-    }//GEN-LAST:event_jPanelArbolAncestorAdded
+    private void arbolModulosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_arbolModulosMouseClicked
+
+        if (arbolModulos.isEnabled()) {
+            TreePath tp = arbolModulos.getPathForLocation(evt.getX(), evt.getY());
+            if (tp != null) {
+                captura = arbolModulos.getSelectionPath().toString();
+                /*Intentanmos validar si la cadena equivale a vacio.
+                Si ejecutamos nos daremos cuenta que esto
+                genera una excepciòn ya que la cadena es nula*/
+
+                if (captura.equals("[El Porvenir, Administración General, Organismo]")) {
+                    this.jPanelContenido.removeAll();
+                    this.jPanelContenido.repaint();
+                    this.jPanelContenido.validate();
+
+                    //Se crea el Panel Emplesa
+                    PanelOrganismo unPanelEmpresa = new PanelOrganismo();
+                    unPanelEmpresa.setSize(950, 750);
+                    unPanelEmpresa.setVisible(true);
+
+                    this.jPanelContenido.add(unPanelEmpresa);
+                    habilitarArbol(false);
+                    unPanelEmpresa.validate();
+                    
+                }
+
+                if (captura.equals("[El Porvenir, Administración General, Personas]")) {
+
+                    this.jPanelContenido.removeAll();
+                    this.jPanelContenido.repaint();
+                    this.jPanelContenido.validate();
+
+                    //Se crea el Panel Emplesa
+                    PanelPersona unPanelPersona = new PanelPersona();
+                    unPanelPersona.setSize(950, 750);
+                    unPanelPersona.setVisible(true);
+
+                    this.jPanelContenido.add(unPanelPersona);
+                    habilitarArbol(false);
+                    unPanelPersona.validate();
+                }
+                if (captura.equals("[El Porvenir, Administración General, Empleados]")) {
+
+                    this.jPanelContenido.removeAll();
+                    this.jPanelContenido.repaint();
+                    this.jPanelContenido.validate();
+
+                    //Se crea el Panel Empleado
+                    PanelEmpleado unPanelEmpleado = new PanelEmpleado();
+                    unPanelEmpleado.setSize(950, 750);
+                    unPanelEmpleado.setVisible(true);
+
+                    this.jPanelContenido.add(unPanelEmpleado);
+                    habilitarArbol(false);
+                    unPanelEmpleado.validate();
+                }
+
+                if (captura.equals("[El Porvenir, Administración General, Usuarios]")) {
+
+                    this.jPanelContenido.removeAll();
+                    this.jPanelContenido.repaint();
+                    this.jPanelContenido.validate();
+
+                    //Se crea el Panel Emplesa
+                    PanelUsuario unPanelUsuario = new PanelUsuario();
+                    unPanelUsuario.setSize(950, 750);
+                    unPanelUsuario.setVisible(true);
+
+                    this.jPanelContenido.add(unPanelUsuario);
+                    habilitarArbol(false);
+                    unPanelUsuario.validate();
+                }
+
+                if (captura.equals("[El Porvenir, Gestión de Turnos, Asignar Turno]")) {
+
+                    this.jPanelContenido.removeAll();
+                    this.jPanelContenido.repaint();
+                    this.jPanelContenido.validate();
+                    //Se crea el Panel Emplesa
+                    PanelProcesarTurno01 unPanelProcesarTurno01 = new PanelProcesarTurno01();
+                    unPanelProcesarTurno01.setSize(950, 750);
+                    unPanelProcesarTurno01.setVisible(true);
+
+                    this.jPanelContenido.add(unPanelProcesarTurno01);
+                    habilitarArbol(false);
+                    unPanelProcesarTurno01.validate();
+                }
+
+            }
+        }
+    }//GEN-LAST:event_arbolModulosMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel JpanelContenedor;
-    private javax.swing.JButton jButton1;
+    public static final javax.swing.JTree arbolModulos = new javax.swing.JTree();
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
-    public static javax.swing.JPanel jPanelArbol;
-    public static javax.swing.JPanel jPanelContenido;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JPanel jPanel3;
+    public static final javax.swing.JPanel jPanelArbol = new javax.swing.JPanel();
+    public static final javax.swing.JPanel jPanelContenido = new javax.swing.JPanel();
+    private javax.swing.JScrollPane jScrollPaneArbol;
     private javax.swing.JLabel jlbl_TipoUsuario;
     private javax.swing.JLabel jlbl_puesto;
     private javax.swing.JLabel jlbl_usuario;
-    private javax.swing.JPanel jpanel_Usuario;
     // End of variables declaration//GEN-END:variables
 
-    
     public void arranca() {
         this.tipoUsuario = LoginController.getInstanceUsuario().getTipoUsuario();
 
@@ -178,19 +363,6 @@ public class JFramePrincipal extends javax.swing.JFrame{
             if (this.tipoUsuario.getDescripcion().equals("Empleado")) {
                 //Si el usuario posee un empleado asociado
                 if (LoginController.getInstanceUsuario().getUnEmpleado() != null) {
-                    unPanelArbolAdministrador = new PanelArbolAdministrador();
-                    unPanelArbolAdministrador.setSize(350, 750);
-                    unPanelArbolAdministrador.setLocation(0, 0);
-
-                    unPanelContenedor = new PanelContenedor();
-                    unPanelContenedor.setSize(950, 750);
-                    unPanelContenedor.setLocation(0, 0);
-
-                    jPanelArbol.removeAll();
-                    jPanelArbol.add(unPanelArbolAdministrador, BorderLayout.NORTH);
-
-                    jPanelContenido.removeAll();
-                    jPanelContenido.add(unPanelContenedor, BorderLayout.NORTH);
 
                     //Uso del Singleton creado en el Login
                     this.jlbl_usuario.setText(LoginController.getInstanceUsuario().getNombre());
@@ -208,16 +380,20 @@ public class JFramePrincipal extends javax.swing.JFrame{
             }
         }
     }
-    
+
     /**
-     * Se llama desde cualquier lugar de la aplicación y bloqueara o habilitara el arbol
-     * @param estado 
+     * Se llama desde cualquier lugar de la aplicación y bloqueara o habilitara
+     * el arbol
+     *
+     * @param estado
      */
-    public static void habilitarArbol(boolean estado) {
-        if (unPanelArbolAdministrador!=null) {
-            unPanelArbolAdministrador.habilitarArbol(estado);
-            jPanelContenido.removeAll();
-            jPanelContenido.repaint();
-        }
+    private void habilitarArbol(boolean estado) {
+        this.arbolModulos.setEnabled(estado);
+        this.jPanelArbol.setEnabled(estado);
+        this.jPanelArbol.repaint();
+        this.jPanelArbol.validate();
     }
+    
+    
+
 }

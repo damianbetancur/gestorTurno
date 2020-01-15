@@ -120,9 +120,9 @@ public class PanelPersona extends javax.swing.JPanel implements InterfacePanel {
         jbtn_volver = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setLayout(null);
-
-        jPanel_crud.setLayout(null);
+        setMaximumSize(new java.awt.Dimension(950, 750));
+        setMinimumSize(new java.awt.Dimension(950, 750));
+        setPreferredSize(new java.awt.Dimension(950, 750));
 
         jScrollPaneTabla.setMaximumSize(new java.awt.Dimension(950, 750));
         jScrollPaneTabla.setMinimumSize(new java.awt.Dimension(950, 750));
@@ -131,9 +131,6 @@ public class PanelPersona extends javax.swing.JPanel implements InterfacePanel {
         jtb_persona.setModel(tablaPersonaModelo);
         jScrollPaneTabla.setViewportView(jtb_persona);
 
-        jPanel_crud.add(jScrollPaneTabla);
-        jScrollPaneTabla.setBounds(10, 10, 700, 210);
-
         jbtn_listar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jbtn_listar.setText("LISTAR");
         jbtn_listar.addActionListener(new java.awt.event.ActionListener() {
@@ -141,8 +138,6 @@ public class PanelPersona extends javax.swing.JPanel implements InterfacePanel {
                 jbtn_listarActionPerformed(evt);
             }
         });
-        jPanel_crud.add(jbtn_listar);
-        jbtn_listar.setBounds(10, 240, 100, 30);
 
         jbtn_agregar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jbtn_agregar.setText("AGREGAR");
@@ -151,8 +146,6 @@ public class PanelPersona extends javax.swing.JPanel implements InterfacePanel {
                 jbtn_agregarActionPerformed(evt);
             }
         });
-        jPanel_crud.add(jbtn_agregar);
-        jbtn_agregar.setBounds(610, 240, 100, 30);
 
         jtf_buscarPersona.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jtf_buscarPersona.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -165,13 +158,36 @@ public class PanelPersona extends javax.swing.JPanel implements InterfacePanel {
                 jtf_buscarPersonaKeyReleased(evt);
             }
         });
-        jPanel_crud.add(jtf_buscarPersona);
-        jtf_buscarPersona.setBounds(120, 240, 480, 30);
 
-        add(jPanel_crud);
-        jPanel_crud.setBounds(70, 40, 720, 280);
-
-        jPanel_datos.setLayout(null);
+        javax.swing.GroupLayout jPanel_crudLayout = new javax.swing.GroupLayout(jPanel_crud);
+        jPanel_crud.setLayout(jPanel_crudLayout);
+        jPanel_crudLayout.setHorizontalGroup(
+            jPanel_crudLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_crudLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jPanel_crudLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPaneTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(jPanel_crudLayout.createSequentialGroup()
+                        .addComponent(jbtn_listar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jtf_buscarPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 602, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbtn_agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 2, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel_crudLayout.setVerticalGroup(
+            jPanel_crudLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_crudLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jScrollPaneTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel_crudLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbtn_listar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtf_buscarPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbtn_agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(9, 9, 9))
+        );
 
         jbtn_eliminar.setText("ELIMINAR");
         jbtn_eliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -179,8 +195,6 @@ public class PanelPersona extends javax.swing.JPanel implements InterfacePanel {
                 jbtn_eliminarActionPerformed(evt);
             }
         });
-        jPanel_datos.add(jbtn_eliminar);
-        jbtn_eliminar.setBounds(500, 270, 100, 30);
 
         jbtn_cancelar.setText("CANCELAR");
         jbtn_cancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -188,45 +202,27 @@ public class PanelPersona extends javax.swing.JPanel implements InterfacePanel {
                 jbtn_cancelarActionPerformed(evt);
             }
         });
-        jPanel_datos.add(jbtn_cancelar);
-        jbtn_cancelar.setBounds(250, 270, 100, 30);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("NOMBRE");
-        jPanel_datos.add(jLabel1);
-        jLabel1.setBounds(120, 30, 120, 30);
 
         jtf_nombre.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jPanel_datos.add(jtf_nombre);
-        jtf_nombre.setBounds(250, 30, 350, 30);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setText("APELLIDO");
-        jPanel_datos.add(jLabel2);
-        jLabel2.setBounds(120, 70, 120, 30);
 
         jtf_apellido.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jPanel_datos.add(jtf_apellido);
-        jtf_apellido.setBounds(250, 70, 350, 30);
 
         jtf_dni.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jPanel_datos.add(jtf_dni);
-        jtf_dni.setBounds(250, 120, 350, 30);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setText("TIPO PERSONA");
-        jPanel_datos.add(jLabel3);
-        jLabel3.setBounds(120, 170, 120, 30);
 
         jcb_tipoPersona.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jcb_tipoPersona.setModel(tipoPersonaModel);
-        jPanel_datos.add(jcb_tipoPersona);
-        jcb_tipoPersona.setBounds(250, 170, 350, 30);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setText("DNI");
-        jPanel_datos.add(jLabel4);
-        jLabel4.setBounds(120, 120, 120, 30);
 
         jbtn_modificar.setText("MODIFICAR");
         jbtn_modificar.addActionListener(new java.awt.event.ActionListener() {
@@ -234,8 +230,6 @@ public class PanelPersona extends javax.swing.JPanel implements InterfacePanel {
                 jbtn_modificarActionPerformed(evt);
             }
         });
-        jPanel_datos.add(jbtn_modificar);
-        jbtn_modificar.setBounds(380, 270, 100, 30);
 
         jbtn_aceptar.setText("ACEPTAR");
         jbtn_aceptar.addActionListener(new java.awt.event.ActionListener() {
@@ -243,32 +237,95 @@ public class PanelPersona extends javax.swing.JPanel implements InterfacePanel {
                 jbtn_aceptarActionPerformed(evt);
             }
         });
-        jPanel_datos.add(jbtn_aceptar);
-        jbtn_aceptar.setBounds(120, 270, 100, 30);
 
         jlbl_mensaje.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jlbl_mensaje.setForeground(new java.awt.Color(255, 0, 0));
-        jPanel_datos.add(jlbl_mensaje);
-        jlbl_mensaje.setBounds(120, 220, 480, 30);
 
         jlbl_alertaTipoPersona.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel_datos.add(jlbl_alertaTipoPersona);
-        jlbl_alertaTipoPersona.setBounds(620, 170, 40, 30);
 
         jlbl_alertaNombre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel_datos.add(jlbl_alertaNombre);
-        jlbl_alertaNombre.setBounds(620, 30, 40, 30);
 
         jlbl_alertaApellido.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel_datos.add(jlbl_alertaApellido);
-        jlbl_alertaApellido.setBounds(620, 70, 40, 30);
 
         jlbl_alertaDNI.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel_datos.add(jlbl_alertaDNI);
-        jlbl_alertaDNI.setBounds(620, 120, 40, 30);
 
-        add(jPanel_datos);
-        jPanel_datos.setBounds(70, 330, 720, 310);
+        javax.swing.GroupLayout jPanel_datosLayout = new javax.swing.GroupLayout(jPanel_datos);
+        jPanel_datos.setLayout(jPanel_datosLayout);
+        jPanel_datosLayout.setHorizontalGroup(
+            jPanel_datosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_datosLayout.createSequentialGroup()
+                .addGap(120, 120, 120)
+                .addGroup(jPanel_datosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jlbl_mensaje, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel_datosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(jPanel_datosLayout.createSequentialGroup()
+                            .addComponent(jbtn_aceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(82, 82, 82)
+                            .addComponent(jbtn_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(55, 55, 55)
+                            .addComponent(jbtn_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jbtn_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel_datosLayout.createSequentialGroup()
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(10, 10, 10)
+                            .addComponent(jcb_tipoPersona, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel_datosLayout.createSequentialGroup()
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(10, 10, 10)
+                            .addComponent(jtf_dni))
+                        .addGroup(jPanel_datosLayout.createSequentialGroup()
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(10, 10, 10)
+                            .addComponent(jtf_apellido))
+                        .addGroup(jPanel_datosLayout.createSequentialGroup()
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(10, 10, 10)
+                            .addComponent(jtf_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel_datosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel_datosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel_datosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jlbl_alertaNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jlbl_alertaApellido, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jlbl_alertaDNI, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jlbl_alertaTipoPersona, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel_datosLayout.setVerticalGroup(
+            jPanel_datosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_datosLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(jPanel_datosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtf_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlbl_alertaNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addGroup(jPanel_datosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtf_apellido, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlbl_alertaApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
+                .addGroup(jPanel_datosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtf_dni, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlbl_alertaDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
+                .addGroup(jPanel_datosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcb_tipoPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlbl_alertaTipoPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
+                .addComponent(jlbl_mensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                .addGroup(jPanel_datosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel_datosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jbtn_aceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jbtn_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jbtn_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jbtn_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
 
         jbtn_volver.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         jbtn_volver.setText("VOLVER");
@@ -277,8 +334,30 @@ public class PanelPersona extends javax.swing.JPanel implements InterfacePanel {
                 jbtn_volverActionPerformed(evt);
             }
         });
-        add(jbtn_volver);
-        jbtn_volver.setBounds(70, 653, 720, 60);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(47, 47, 47)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jbtn_volver, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel_datos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel_crud, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(51, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addComponent(jPanel_crud, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(jPanel_datos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(13, 13, 13)
+                .addComponent(jbtn_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(57, Short.MAX_VALUE))
+        );
     }// </editor-fold>//GEN-END:initComponents
 
     /**
@@ -293,8 +372,9 @@ public class PanelPersona extends javax.swing.JPanel implements InterfacePanel {
         //limpia todos los campos
         limpiarTodosLosCampos();
 
-        //Habilita el Arbol de seleccion
-        JFramePrincipal.habilitarArbol(true);
+        JFramePrincipal.getArbolModulos().setEnabled(true);
+        JFramePrincipal.getjPanelContenido().removeAll();
+        JFramePrincipal.getjPanelContenido().repaint();
     }//GEN-LAST:event_jbtn_volverActionPerformed
 
     /**

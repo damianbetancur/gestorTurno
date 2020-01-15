@@ -48,10 +48,10 @@ public class Empleado implements Serializable {
 
     @JoinTable(
             name = "rel_Tipo_Tramite_Empleado",
-            joinColumns = @JoinColumn(name = "FK_Tipo_Tramite", nullable = true),
-            inverseJoinColumns = @JoinColumn(name = "FK_Empleado", nullable = true)
+            joinColumns = @JoinColumn(name = "FK_Empleado"),
+            inverseJoinColumns = @JoinColumn(name = "FK_Tipo_Tramite")
     )
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     private List<TipoTramite> tipoTramite;
 
     public Empleado() {
