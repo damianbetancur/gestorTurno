@@ -35,6 +35,7 @@ C:\Users\Ariel\Documents\NetBeansProjects\GestorTurno10\src\main\java\view\JFram
 C:\Users\Ariel\Documents\NetBeansProjects\GestorTurno10\src\main\java\dao\Conexion.java
 C:\Users\Ariel\Documents\NetBeansProjects\GestorTurno10\src\main\java\view\PanelProcesarTurno03.java
 C:\Users\Ariel\Documents\NetBeansProjects\GestorTurno10\src\main\java\view\PanelProcesarTurno06.java
+C:\Users\Ariel\Documents\NetBeansProjects\GestorTurno10\src\main\java\view\resources\TablaEmpleadoProcesarTramiteModelListener.java
 C:\Users\Ariel\Documents\NetBeansProjects\GestorTurno10\src\main\java\dao\TipoTramiteJpaController.java
 C:\Users\Ariel\Documents\NetBeansProjects\GestorTurno10\src\main\java\dao\EstadoTurnoJpaController.java
 C:\Users\Ariel\Documents\NetBeansProjects\GestorTurno10\src\main\java\model\Usuario.java
@@ -55,11 +56,13 @@ C:\Users\Ariel\Documents\NetBeansProjects\GestorTurno10\src\main\java\controller
 C:\Users\Ariel\Documents\NetBeansProjects\GestorTurno10\src\main\java\model\TipoEmpleado.java
 C:\Users\Ariel\Documents\NetBeansProjects\GestorTurno10\src\main\java\view\PanelProcesarTurno01.java
 C:\Users\Ariel\Documents\NetBeansProjects\GestorTurno10\src\main\java\view\PanelProcesarTurno04.java
+C:\Users\Ariel\Documents\NetBeansProjects\GestorTurno10\src\main\java\view\PanelProcesarTramite.java
 C:\Users\Ariel\Documents\NetBeansProjects\GestorTurno10\src\main\java\controller\UsuarioController.java
 C:\Users\Ariel\Documents\NetBeansProjects\GestorTurno10\src\main\java\controller\EmpleadoController.java
 C:\Users\Ariel\Documents\NetBeansProjects\GestorTurno10\src\main\java\dao\TipoEmpleadoJpaController.java
 C:\Users\Ariel\Documents\NetBeansProjects\GestorTurno10\src\main\java\view\PanelPersona.java
 C:\Users\Ariel\Documents\NetBeansProjects\GestorTurno10\src\main\java\model\TipoUsuario.java
+C:\Users\Ariel\Documents\NetBeansProjects\GestorTurno10\src\main\java\view\PanelProcesarTurno07.java
 C:\Users\Ariel\Documents\NetBeansProjects\GestorTurno10\src\main\java\model\Tramite.java
 C:\Users\Ariel\Documents\NetBeansProjects\GestorTurno10\src\main\java\dao\UsuarioJpaController.java
 C:\Users\Ariel\Documents\NetBeansProjects\GestorTurno10\src\main\java\view\resources\TablaUsuarioModelListener.java
