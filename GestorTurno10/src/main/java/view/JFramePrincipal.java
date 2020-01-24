@@ -225,8 +225,9 @@ public class JFramePrincipal extends javax.swing.JFrame {
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanelArbol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanelContenido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanelContenido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(4, 4, 4)))
                 .addGap(18, 18, 18))
         );
         layout.setVerticalGroup(
@@ -255,9 +256,8 @@ public class JFramePrincipal extends javax.swing.JFrame {
                 genera una excepciòn ya que la cadena es nula*/
 
                 if (captura.equals("[El Porvenir, Administración General, Organismo]")) {
-                    this.jPanelContenido.removeAll();
-                    this.jPanelContenido.repaint();
-                    this.jPanelContenido.validate();
+                    
+                    habilitarArbol(false);
 
                     //Se crea el Panel Emplesa
                     PanelOrganismo unPanelEmpresa = new PanelOrganismo();
@@ -265,16 +265,13 @@ public class JFramePrincipal extends javax.swing.JFrame {
                     unPanelEmpresa.setVisible(true);
 
                     this.jPanelContenido.add(unPanelEmpresa);
-                    habilitarArbol(false);
-                    unPanelEmpresa.validate();
-                    
+                    this.jPanelContenido.validate();
+
                 }
 
                 if (captura.equals("[El Porvenir, Administración General, Personas]")) {
 
-                    this.jPanelContenido.removeAll();
-                    this.jPanelContenido.repaint();
-                    this.jPanelContenido.validate();
+                    habilitarArbol(false);
 
                     //Se crea el Panel Emplesa
                     PanelPersona unPanelPersona = new PanelPersona();
@@ -282,14 +279,12 @@ public class JFramePrincipal extends javax.swing.JFrame {
                     unPanelPersona.setVisible(true);
 
                     this.jPanelContenido.add(unPanelPersona);
-                    habilitarArbol(false);
-                    unPanelPersona.validate();
+                    
+                    this.jPanelContenido.validate();
                 }
                 if (captura.equals("[El Porvenir, Administración General, Empleados]")) {
 
-                    this.jPanelContenido.removeAll();
-                    this.jPanelContenido.repaint();
-                    this.jPanelContenido.validate();
+                    habilitarArbol(false);
 
                     //Se crea el Panel Empleado
                     PanelEmpleado unPanelEmpleado = new PanelEmpleado();
@@ -297,15 +292,13 @@ public class JFramePrincipal extends javax.swing.JFrame {
                     unPanelEmpleado.setVisible(true);
 
                     this.jPanelContenido.add(unPanelEmpleado);
-                    habilitarArbol(false);
-                    unPanelEmpleado.validate();
+                    
+                    this.jPanelContenido.validate();
                 }
 
                 if (captura.equals("[El Porvenir, Administración General, Usuarios]")) {
 
-                    this.jPanelContenido.removeAll();
-                    this.jPanelContenido.repaint();
-                    this.jPanelContenido.validate();
+                    habilitarArbol(false);
 
                     //Se crea el Panel Emplesa
                     PanelUsuario unPanelUsuario = new PanelUsuario();
@@ -313,23 +306,36 @@ public class JFramePrincipal extends javax.swing.JFrame {
                     unPanelUsuario.setVisible(true);
 
                     this.jPanelContenido.add(unPanelUsuario);
-                    habilitarArbol(false);
-                    unPanelUsuario.validate();
+                    
+                    this.jPanelContenido.validate();
                 }
 
                 if (captura.equals("[El Porvenir, Gestión de Turnos, Asignar Turno]")) {
 
-                    this.jPanelContenido.removeAll();
-                    this.jPanelContenido.repaint();
-                    this.jPanelContenido.validate();
+                    habilitarArbol(false);
+                    
                     //Se crea el Panel Emplesa
                     PanelProcesarTurno01 unPanelProcesarTurno01 = new PanelProcesarTurno01();
                     unPanelProcesarTurno01.setSize(950, 750);
                     unPanelProcesarTurno01.setVisible(true);
 
                     this.jPanelContenido.add(unPanelProcesarTurno01);
+                    
+                    this.jPanelContenido.validate();
+                }
+                
+                if (captura.equals("[El Porvenir, Gestion de Tramite, Procesar Tramite]")) {
+
                     habilitarArbol(false);
-                    unPanelProcesarTurno01.validate();
+                    
+                    //Se crea el Panel Emplesa
+                    PanelProcesarTramite01 unPanelProcesarTramite01 = new PanelProcesarTramite01();
+                    unPanelProcesarTramite01.setSize(950, 750);
+                    unPanelProcesarTramite01.setVisible(true);
+
+                    this.jPanelContenido.add(unPanelProcesarTramite01);
+                    
+                    this.jPanelContenido.validate();
                 }
 
             }
@@ -392,8 +398,13 @@ public class JFramePrincipal extends javax.swing.JFrame {
         this.jPanelArbol.setEnabled(estado);
         this.jPanelArbol.repaint();
         this.jPanelArbol.validate();
+
+        this.jPanelContenido.removeAll();
+        this.jPanelContenido.repaint();
+        this.jPanelContenido.validate();
+        
+        this.repaint();
+        this.validate();
     }
-    
-    
 
 }

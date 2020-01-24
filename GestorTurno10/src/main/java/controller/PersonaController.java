@@ -11,8 +11,6 @@ import dao.TipoPersonaJpaController;
 import dao.TurnoJpaController;
 import dao.UsuarioJpaController;
 import dao.exceptions.NonexistentEntityException;
-import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;

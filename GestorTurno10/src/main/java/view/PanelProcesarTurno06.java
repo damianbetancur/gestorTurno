@@ -9,14 +9,9 @@ import com.toedter.calendar.JTextFieldDateEditor;
 import controller.ProcesarTurnoController;
 import java.awt.Color;
 import java.util.Date;
-import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
-import model.Area;
-import model.Empleado;
 import model.HorarioAtencionTurno;
-import model.TipoAtencion;
-import model.TipoTramite;
 
 /**
  *
@@ -40,20 +35,23 @@ public class PanelProcesarTurno06 extends javax.swing.JPanel implements Interfac
         habilitarTodosLosBotones(true);
         this.controlador = controlador;
 
-        this.jpb_estado_procesarTurno.setValue(75);
-        this.jpb_estado_procesarTurno.setForeground(new Color(220, 118, 51));
-
-        this.jlbl_titulo.setBackground(new Color(30, 132, 73));
-        this.jlbl_titulo.setOpaque(true);
-
         //Evitar edicion manual de fecha
         JTextFieldDateEditor editor = (JTextFieldDateEditor) jdc_fechaDeTurno.getDateEditor();
         editor.setEditable(false);
+        editor.setEnabled(false);
+        editor.setFocusable(false);
 
         habilitarTodosLosCampos(false);
         habilitarTodosLosBotones(false);
         this.validador.habilitarBoton(true, this.jbtn_cancelar, Color.RED, Color.WHITE, null, null);
-        jdc_fechaDeTurno.setVisible(true);
+
+        this.jpb_estado_procesarTurno.setStringPainted(true);
+        this.jpb_estado_procesarTurno.setString("FECHA y HORA");
+        this.jpb_estado_procesarTurno.setValue(90);
+        this.jpb_estado_procesarTurno.setForeground(new Color(220, 118, 51));
+
+        this.jlbl_titulo.setBackground(Color.BLACK);
+        this.jlbl_titulo.setOpaque(true);
 
         repaint();
 
@@ -68,9 +66,9 @@ public class PanelProcesarTurno06 extends javax.swing.JPanel implements Interfac
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jlbl_paso = new javax.swing.JLabel();
-        jlbl_titulo = new javax.swing.JLabel();
+        jPanelProgreso = new javax.swing.JPanel();
         jpb_estado_procesarTurno = new javax.swing.JProgressBar();
+        jlbl_titulo = new javax.swing.JLabel();
         jPanel_Contenido = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -84,19 +82,47 @@ public class PanelProcesarTurno06 extends javax.swing.JPanel implements Interfac
         setMinimumSize(new java.awt.Dimension(950, 750));
         setPreferredSize(new java.awt.Dimension(950, 750));
 
-        jlbl_paso.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbl_paso.setText("TIPO ATENCIÓN");
-
         jlbl_titulo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jlbl_titulo.setForeground(new java.awt.Color(255, 255, 255));
         jlbl_titulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbl_titulo.setText("PROCESAR TURNO");
+
+        javax.swing.GroupLayout jPanelProgresoLayout = new javax.swing.GroupLayout(jPanelProgreso);
+        jPanelProgreso.setLayout(jPanelProgresoLayout);
+        jPanelProgresoLayout.setHorizontalGroup(
+            jPanelProgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelProgresoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelProgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jpb_estado_procesarTurno, javax.swing.GroupLayout.DEFAULT_SIZE, 910, Short.MAX_VALUE)
+                    .addComponent(jlbl_titulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanelProgresoLayout.setVerticalGroup(
+            jPanelProgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelProgresoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jlbl_titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addComponent(jpb_estado_procesarTurno, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jPanel_Contenido.setMaximumSize(new java.awt.Dimension(930, 460));
+        jPanel_Contenido.setMinimumSize(new java.awt.Dimension(930, 460));
+        jPanel_Contenido.setPreferredSize(new java.awt.Dimension(930, 460));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel3.setText("FECHA ATENCIÓN");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel2.setText("HORARIO ATENCIÓN");
+
+        jcb_horarioAtencion.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jcb_horarioAtencionFocusGained(evt);
+            }
+        });
 
         jdc_fechaDeTurno.setDoubleBuffered(false);
         jdc_fechaDeTurno.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -114,31 +140,29 @@ public class PanelProcesarTurno06 extends javax.swing.JPanel implements Interfac
         jPanel_Contenido.setLayout(jPanel_ContenidoLayout);
         jPanel_ContenidoLayout.setHorizontalGroup(
             jPanel_ContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_ContenidoLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_ContenidoLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel_ContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel_ContenidoLayout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(40, 40, 40)
-                        .addComponent(jdc_fechaDeTurno, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel_ContenidoLayout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
-                        .addComponent(jcb_horarioAtencion, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(126, Short.MAX_VALUE))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel_ContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jdc_fechaDeTurno, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
+                    .addComponent(jcb_horarioAtencion, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel_ContenidoLayout.setVerticalGroup(
             jPanel_ContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_ContenidoLayout.createSequentialGroup()
-                .addGap(70, 70, 70)
-                .addGroup(jPanel_ContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .addComponent(jdc_fechaDeTurno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(30, 30, 30)
+                .addGap(86, 86, 86)
                 .addGroup(jPanel_ContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jcb_horarioAtencion, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(192, Short.MAX_VALUE))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jdc_fechaDeTurno, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(42, 42, 42)
+                .addGroup(jPanel_ContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jcb_horarioAtencion, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(272, Short.MAX_VALUE))
         );
 
         //Mi JDateChooser es llamado JD_Fecha
@@ -164,34 +188,29 @@ public class PanelProcesarTurno06 extends javax.swing.JPanel implements Interfac
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(70, 70, 70)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jlbl_titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 720, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlbl_paso, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbtn_siguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 720, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbtn_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 720, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel_Contenido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jpb_estado_procesarTurno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jbtn_siguiente, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbtn_cancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanelProgreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel_Contenido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jlbl_titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jpb_estado_procesarTurno, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlbl_paso, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
+                .addContainerGap()
+                .addComponent(jPanelProgreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel_Contenido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                 .addComponent(jbtn_siguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(13, 13, 13)
-                .addComponent(jbtn_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jbtn_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
-
-        jlbl_paso.getAccessibleContext().setAccessibleName("PASO 1");
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_cancelarActionPerformed
@@ -209,7 +228,8 @@ public class PanelProcesarTurno06 extends javax.swing.JPanel implements Interfac
 
     private void jbtn_siguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_siguienteActionPerformed
         HorarioAtencionTurno nuevaHoraAtencion = (HorarioAtencionTurno) this.jcb_horarioAtencion.getSelectedItem();
-        
+
+
         this.controlador.getNuevoTurno().setUnaHoraTurno(nuevaHoraAtencion);
         this.controlador.getNuevoTurno().setFecha(jdc_fechaDeTurno.getDate());
 
@@ -225,21 +245,29 @@ public class PanelProcesarTurno06 extends javax.swing.JPanel implements Interfac
         JFramePrincipal.getjPanelContenido().repaint();
         JFramePrincipal.getjPanelContenido().validate();
 
+        this.updateUI();
+
     }//GEN-LAST:event_jbtn_siguienteActionPerformed
 
     private void jdc_fechaDeTurnoPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jdc_fechaDeTurnoPropertyChange
-        Date date;
-        date = jdc_fechaDeTurno.getDate();
+        jcb_horarioAtencion.requestFocus();
+        jcb_horarioAtencion.validate();
+    }//GEN-LAST:event_jdc_fechaDeTurnoPropertyChange
 
-        if (date != null) {
-            this.jcb_horarioAtencion.removeAllItems();
-            this.validate();
+    private void jcb_horarioAtencionFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jcb_horarioAtencionFocusGained
 
-            if (validador.calcularFechaTurno(date)) {
+        Date fechaSeleccionada;
+
+        fechaSeleccionada = jdc_fechaDeTurno.getDate();
+
+        if (fechaSeleccionada != null) {
+            if (validador.calcularFechaTurno(fechaSeleccionada)) {
                 this.validador.habilitarBoton(true, this.jbtn_siguiente, new Color(30, 132, 73), Color.WHITE, null, null);
                 this.validador.habilitarCombobox(true, jcb_horarioAtencion);
-
-                cargarHorarios();
+                if (jcb_horarioAtencion.isEnabled()) {
+                    jcb_horarioAtencion.removeAllItems();
+                    cargarHorarios(fechaSeleccionada);
+                }
 
             } else {
                 JOptionPane.showConfirmDialog(this, "              La fecha ingresada es invalida \n"
@@ -248,31 +276,34 @@ public class PanelProcesarTurno06 extends javax.swing.JPanel implements Interfac
 
                 this.jdc_fechaDeTurno.setCalendar(null);
 
+                this.jcb_horarioAtencion.removeAllItems();
+                this.validador.habilitarBoton(false, this.jbtn_siguiente, new Color(30, 132, 73), Color.WHITE, null, null);
+                this.validador.habilitarCombobox(false, jcb_horarioAtencion);
             }
+        }
+    }//GEN-LAST:event_jcb_horarioAtencionFocusGained
 
-        } else {
+    private void jdc_fechaDeTurnoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jdc_fechaDeTurnoMouseClicked
+
+        if (jdc_fechaDeTurno.getCalendarButton().isSelected()) {
+            this.jdc_fechaDeTurno.setCalendar(null);
             this.jcb_horarioAtencion.removeAllItems();
             this.validador.habilitarBoton(false, this.jbtn_siguiente, new Color(30, 132, 73), Color.WHITE, null, null);
             this.validador.habilitarCombobox(false, jcb_horarioAtencion);
-            this.validate();
         }
 
-    }//GEN-LAST:event_jdc_fechaDeTurnoPropertyChange
-
-    private void jdc_fechaDeTurnoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jdc_fechaDeTurnoMouseClicked
-        // TODO add your handling code here:
     }//GEN-LAST:event_jdc_fechaDeTurnoMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanelProgreso;
     private javax.swing.JPanel jPanel_Contenido;
     private javax.swing.JButton jbtn_cancelar;
     private javax.swing.JButton jbtn_siguiente;
     private javax.swing.JComboBox<String> jcb_horarioAtencion;
     private com.toedter.calendar.JDateChooser jdc_fechaDeTurno;
-    private javax.swing.JLabel jlbl_paso;
     private javax.swing.JLabel jlbl_titulo;
     private javax.swing.JProgressBar jpb_estado_procesarTurno;
     // End of variables declaration//GEN-END:variables
@@ -294,9 +325,12 @@ public class PanelProcesarTurno06 extends javax.swing.JPanel implements Interfac
 
     /**
      * Carga las Areas el el JComboBox area
+     *
+     * @param unaFecha
      */
-    public void cargarHorarios() {
-        DefaultComboBoxModel mdl = new DefaultComboBoxModel(this.controlador.buscarHorariosDeTurnoDisponibles());
+    public void cargarHorarios(Date unaFecha) {
+        DefaultComboBoxModel mdl = new DefaultComboBoxModel(this.controlador.buscarHorariosDeTurnoDisponibles(this.controlador.getNuevoTurno().getUnAreaB(), this.controlador.getNuevoTurno().getUnEmpleado(), unaFecha));
         this.jcb_horarioAtencion.setModel(mdl);
     }
+
 }

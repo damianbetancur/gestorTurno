@@ -9,7 +9,7 @@ import model.Organismo;
 import model.TipoEmpleado;
 import model.TipoTramite;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2020-01-16T11:17:54")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2020-01-24T00:08:13")
 @StaticMetamodel(Empleado.class)
 public class Empleado_ { 
 

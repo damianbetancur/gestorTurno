@@ -44,15 +44,23 @@ public class ProcesarTurnoController {
     private final EstadoTurnoJpaController estadoTurnoDAO;
 
     public ProcesarTurnoController(Persona unaPersona) {
+
         nuevoTurno = new Turno();
         nuevoTurno.setUnaPersona(unaPersona);
         nuevoTurno.setUnEmpleado(LoginController.getInstanceUsuario().getUnEmpleado());
+
         areaDAO = new AreaJpaController(Conexion.getEmf());
+
         empleadoDAO = new EmpleadoJpaController(Conexion.getEmf());
+
         tipoEmpleadoDAO = new TipoEmpleadoJpaController(Conexion.getEmf());
+
         tipoAtencionDAO = new TipoAtencionJpaController(Conexion.getEmf());
+
         turnoDAO = new TurnoJpaController(Conexion.getEmf());
+
         horarioTurnoDAO = new HorarioAtencionTurnoJpaController(Conexion.getEmf());
+
         estadoTurnoDAO = new EstadoTurnoJpaController(Conexion.getEmf());
     }
 
@@ -126,19 +134,70 @@ public class ProcesarTurnoController {
         return tiposDeAtencionEncontrados;
     }
 
-    public Vector<HorarioAtencionTurno> buscarHorariosDeTurnoDisponibles() {
+    public Vector<HorarioAtencionTurno> buscarHorariosDeTurnoDisponibles(Area unArea, Empleado unEmpleado, Date unaFecha) {
+
         Vector<HorarioAtencionTurno> horariosDeAtencionDisponibles = new Vector<>();
-        
-        for (HorarioAtencionTurno horariosDeAtencionDisponible : horarioTurnoDAO.findHorarioAtencionTurnoEntities()) {
-            horariosDeAtencionDisponibles.add(horariosDeAtencionDisponible);
+
+        ArrayList<HorarioAtencionTurno> horarioNoDisponible = new ArrayList<>();
+
+        //Todos los turnos de un area
+        for (Turno turnoRecorrido : areaDAO.findArea(unArea.getId()).getTurnos()) {
+            if (compararFecha(unaFecha, turnoRecorrido.getFecha())) {
+                if (unEmpleado.getId().equals(turnoRecorrido.getUnEmpleado().getId())) {
+                    horarioNoDisponible.add(turnoRecorrido.getUnaHoraTurno());
+                }
+            }
         }
+
+        if (!horarioNoDisponible.isEmpty()) {
+            for (HorarioAtencionTurno horarioAtencionTurnoRecorrido : horarioTurnoDAO.findHorarioAtencionTurnoEntities()) {
+
+                horariosDeAtencionDisponibles.add(horarioAtencionTurnoRecorrido);
+                for (HorarioAtencionTurno horarioAtencionTurno : horarioNoDisponible) {
+                    if (horarioAtencionTurno.getId().equals(horarioAtencionTurnoRecorrido.getId())) {
+                        horariosDeAtencionDisponibles.remove(horarioAtencionTurno);
+                    }
+                }
+            }
+
+        } else {
+            for (HorarioAtencionTurno horarioAtencionTurnoRecorrido : horarioTurnoDAO.findHorarioAtencionTurnoEntities()) {
+                horariosDeAtencionDisponibles.add(horarioAtencionTurnoRecorrido);
+            }
+        }
+
         return horariosDeAtencionDisponibles;
     }
 
-    public void crearNuevoTurno(Turno nuevoTurno){
+    public void crearNuevoTurno(Turno nuevoTurno) {
         nuevoTurno.setUnEstadoTurno(estadoTurnoDAO.findEstadoTurno(1l));
         turnoDAO.create(nuevoTurno);
+
     }
-    
-    
+
+    private boolean compararFecha(Date fechaA, Date fechaB) {
+        boolean comparacion = false;
+
+        Calendar calendario = Calendar.getInstance(); // fecha actual
+        calendario.setTime(fechaA); // fecha de turno
+        int aniofechaA = calendario.get(Calendar.YEAR);
+        int mesfechaA = calendario.get(Calendar.MONTH);
+        int diafechaA = calendario.get(Calendar.DAY_OF_MONTH);
+
+        calendario.setTime(fechaB); // fecha de turno
+        int aniofechaB = calendario.get(Calendar.YEAR);
+        int mesfechaB = calendario.get(Calendar.MONTH);
+        int diafechaB = calendario.get(Calendar.DAY_OF_MONTH);
+
+        if (aniofechaA == aniofechaB) {
+            if (mesfechaA == mesfechaB) {
+                if (diafechaA == diafechaB) {
+                    comparacion = true;
+                }
+            }
+        }
+
+        return comparacion;
+    }
+
 }

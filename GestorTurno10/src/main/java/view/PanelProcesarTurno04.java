@@ -6,13 +6,11 @@
 package view;
 
 import controller.ProcesarTurnoController;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import model.Empleado;
-import static view.JFramePrincipal.jPanelContenido;
 import view.resources.TablaEmpleadoModelo;
 import view.resources.TablaEmpleadoProcesarTurnoModelListener;
 
@@ -29,15 +27,16 @@ public class PanelProcesarTurno04 extends javax.swing.JPanel implements Interfac
 
     //variables de comboBox
     private final DefaultComboBoxModel tipoEmpleadoModel;
-    
+
     private final ProcesarTurnoController controlador;
-    
+
     private Empleado empleadoSeleccionado;
 
     private final List<Empleado> empleados;
 
     /**
      * Creates new form PanelPersona
+     *
      * @param controlador
      */
     public PanelProcesarTurno04(ProcesarTurnoController controlador) {
@@ -57,7 +56,7 @@ public class PanelProcesarTurno04 extends javax.swing.JPanel implements Interfac
         habilitarTodosLosCampos(false);
 
         //iniciar el controladorPersona de esta vista
-        this.controlador = controlador;        
+        this.controlador = controlador;
         setSize(800, 600);
 
         //agrega escuchadores de las tablas
@@ -75,8 +74,11 @@ public class PanelProcesarTurno04 extends javax.swing.JPanel implements Interfac
         this.validador.validarSoloLetras(jtf_apellido);
         this.validador.LimitarCaracteres(this.jtf_apellido, 30);
 
+        this.jpb_estado_procesarTurno.setStringPainted(true);
+        this.jpb_estado_procesarTurno.setString("EMPLEADO");
         this.jpb_estado_procesarTurno.setValue(60);
         this.jpb_estado_procesarTurno.setForeground(new Color(220, 118, 51));
+
         this.jlbl_titulo.setBackground(Color.BLACK);
         this.jlbl_titulo.setOpaque(true);
     }
@@ -90,6 +92,8 @@ public class PanelProcesarTurno04 extends javax.swing.JPanel implements Interfac
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanelProgreso = new javax.swing.JPanel();
+        jpb_estado_procesarTurno = new javax.swing.JProgressBar();
         jlbl_titulo = new javax.swing.JLabel();
         jPanel_crud = new javax.swing.JPanel();
         jScrollPaneTabla = new javax.swing.JScrollPane();
@@ -101,25 +105,47 @@ public class PanelProcesarTurno04 extends javax.swing.JPanel implements Interfac
         jtf_nombre = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jtf_apellido = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
         jtf_dni = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jcb_tipoEmpleado = new javax.swing.JComboBox<>();
-        jLabel4 = new javax.swing.JLabel();
-        jlbl_alertaTipoPersona = new javax.swing.JLabel();
         jlbl_alertaNombre = new javax.swing.JLabel();
         jlbl_alertaApellido = new javax.swing.JLabel();
         jlbl_alertaDNI = new javax.swing.JLabel();
-        jbtn_cancelar = new javax.swing.JButton();
-        jlbl_paso = new javax.swing.JLabel();
-        jpb_estado_procesarTurno = new javax.swing.JProgressBar();
+        jlbl_alertaTipoPersona = new javax.swing.JLabel();
         jbtn_siguiente = new javax.swing.JButton();
+        jbtn_cancelar = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setMaximumSize(new java.awt.Dimension(950, 750));
+        setMinimumSize(new java.awt.Dimension(950, 750));
+        setPreferredSize(new java.awt.Dimension(950, 750));
 
         jlbl_titulo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jlbl_titulo.setForeground(new java.awt.Color(255, 255, 255));
         jlbl_titulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbl_titulo.setText("PROCESAR TURNO");
+
+        javax.swing.GroupLayout jPanelProgresoLayout = new javax.swing.GroupLayout(jPanelProgreso);
+        jPanelProgreso.setLayout(jPanelProgresoLayout);
+        jPanelProgresoLayout.setHorizontalGroup(
+            jPanelProgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelProgresoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelProgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jlbl_titulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jpb_estado_procesarTurno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanelProgresoLayout.setVerticalGroup(
+            jPanelProgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelProgresoLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jlbl_titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jpb_estado_procesarTurno, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
         jScrollPaneTabla.setMaximumSize(new java.awt.Dimension(950, 750));
         jScrollPaneTabla.setMinimumSize(new java.awt.Dimension(950, 750));
@@ -155,21 +181,23 @@ public class PanelProcesarTurno04 extends javax.swing.JPanel implements Interfac
             .addGroup(jPanel_crudLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addGroup(jPanel_crudLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPaneTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPaneTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jPanel_crudLayout.createSequentialGroup()
                         .addComponent(jbtn_listar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(jtf_buscarEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jtf_buscarEmpleado)))
+                .addContainerGap())
         );
         jPanel_crudLayout.setVerticalGroup(
             jPanel_crudLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_crudLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(jScrollPaneTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
+                .addComponent(jScrollPaneTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel_crudLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jbtn_listar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtf_buscarEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jtf_buscarEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -182,6 +210,9 @@ public class PanelProcesarTurno04 extends javax.swing.JPanel implements Interfac
 
         jtf_apellido.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel4.setText("DNI");
+
         jtf_dni.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -190,16 +221,13 @@ public class PanelProcesarTurno04 extends javax.swing.JPanel implements Interfac
         jcb_tipoEmpleado.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jcb_tipoEmpleado.setModel(tipoEmpleadoModel);
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel4.setText("DNI");
-
-        jlbl_alertaTipoPersona.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-
         jlbl_alertaNombre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         jlbl_alertaApellido.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         jlbl_alertaDNI.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        jlbl_alertaTipoPersona.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout jPanel_datosLayout = new javax.swing.GroupLayout(jPanel_datos);
         jPanel_datos.setLayout(jPanel_datosLayout);
@@ -231,7 +259,8 @@ public class PanelProcesarTurno04 extends javax.swing.JPanel implements Interfac
                         .addGap(10, 10, 10)
                         .addComponent(jcb_tipoEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(20, 20, 20)
-                        .addComponent(jlbl_alertaTipoPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jlbl_alertaTipoPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(270, Short.MAX_VALUE))
         );
         jPanel_datosLayout.setVerticalGroup(
             jPanel_datosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -255,19 +284,9 @@ public class PanelProcesarTurno04 extends javax.swing.JPanel implements Interfac
                 .addGroup(jPanel_datosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jcb_tipoEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlbl_alertaTipoPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jlbl_alertaTipoPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
-
-        jbtn_cancelar.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        jbtn_cancelar.setText("CANCELAR");
-        jbtn_cancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtn_cancelarActionPerformed(evt);
-            }
-        });
-
-        jlbl_paso.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbl_paso.setText("EMPLEADO");
 
         jbtn_siguiente.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         jbtn_siguiente.setText("SIGUIENTE");
@@ -277,41 +296,43 @@ public class PanelProcesarTurno04 extends javax.swing.JPanel implements Interfac
             }
         });
 
+        jbtn_cancelar.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        jbtn_cancelar.setText("CANCELAR");
+        jbtn_cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtn_cancelarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(70, 70, 70)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jlbl_titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 720, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlbl_paso, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jpb_estado_procesarTurno, javax.swing.GroupLayout.PREFERRED_SIZE, 720, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel_crud, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel_datos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbtn_siguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 720, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbtn_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 720, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jPanelProgreso, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbtn_siguiente, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbtn_cancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel_datos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel_crud, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jlbl_titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jlbl_paso, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jpb_estado_procesarTurno, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
+                .addContainerGap()
+                .addComponent(jPanelProgreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel_crud, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel_datos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
+                .addGap(18, 18, 18)
                 .addComponent(jbtn_siguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(13, 13, 13)
-                .addComponent(jbtn_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jbtn_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
-
-        jlbl_paso.getAccessibleContext().setAccessibleName("PASO 1");
     }// </editor-fold>//GEN-END:initComponents
 
     /**
@@ -362,16 +383,15 @@ public class PanelProcesarTurno04 extends javax.swing.JPanel implements Interfac
      * @param evt
      */
     private void jbtn_siguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_siguienteActionPerformed
-        
+
         this.controlador.getNuevoTurno().setUnEmpleado(empleadoSeleccionado);
-        
+
         //Se crea el Panel Emplesa    
-        
         PanelProcesarTurno05 unPaneProcesarTurno05 = new PanelProcesarTurno05(this.controlador);
         unPaneProcesarTurno05.setSize(950, 750);
         unPaneProcesarTurno05.setLocation(0, 0);
         unPaneProcesarTurno05.setVisible(true);
-        
+
         //JFramePrincipal.modificarPanelContenido(unPanelProcesarTurno02);
         JFramePrincipal.getjPanelContenido().removeAll();
         JFramePrincipal.getjPanelContenido().add(unPaneProcesarTurno05);
@@ -386,9 +406,9 @@ public class PanelProcesarTurno04 extends javax.swing.JPanel implements Interfac
      * @param evt
      */
     private void jtf_buscarEmpleadoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_buscarEmpleadoFocusGained
-        if (this.jtf_buscarEmpleado.isEditable()) {            
+        if (this.jtf_buscarEmpleado.isEditable()) {
             this.tablaEmpleadoModelo.setEmpleados(this.controlador.buscarEmpleadoPorAreaTipoTramite(this.controlador.getNuevoTurno().getUnAreaB(), this.controlador.getNuevoTurno().getUnTipoTramite()));
-            
+
             //Refrescar el modelo en la tabla
             this.tablaEmpleadoModelo.fireTableDataChanged();
 
@@ -419,7 +439,7 @@ public class PanelProcesarTurno04 extends javax.swing.JPanel implements Interfac
     private void jtf_buscarEmpleadoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_buscarEmpleadoKeyReleased
         if (this.jtf_buscarEmpleado.isEditable()) {
             //Actualizar el TableModel con la lista del controladorPersona
-            this.tablaEmpleadoModelo.setEmpleados(this.controlador.buscaEmpleadosPorDNI(this.controlador.getNuevoTurno().getUnAreaB(), this.controlador.getNuevoTurno().getUnTipoTramite(),this.jtf_buscarEmpleado.getText()));
+            this.tablaEmpleadoModelo.setEmpleados(this.controlador.buscaEmpleadosPorDNI(this.controlador.getNuevoTurno().getUnAreaB(), this.controlador.getNuevoTurno().getUnTipoTramite(), this.jtf_buscarEmpleado.getText()));
             //Refrescar el modelo en la tabla
             this.tablaEmpleadoModelo.fireTableDataChanged();
         }
@@ -431,6 +451,7 @@ public class PanelProcesarTurno04 extends javax.swing.JPanel implements Interfac
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanelProgreso;
     private javax.swing.JPanel jPanel_crud;
     private javax.swing.JPanel jPanel_datos;
     private javax.swing.JScrollPane jScrollPaneTabla;
@@ -442,7 +463,6 @@ public class PanelProcesarTurno04 extends javax.swing.JPanel implements Interfac
     private javax.swing.JLabel jlbl_alertaDNI;
     private javax.swing.JLabel jlbl_alertaNombre;
     private javax.swing.JLabel jlbl_alertaTipoPersona;
-    private javax.swing.JLabel jlbl_paso;
     private javax.swing.JLabel jlbl_titulo;
     private javax.swing.JProgressBar jpb_estado_procesarTurno;
     private javax.swing.JTable jtb_empleado;

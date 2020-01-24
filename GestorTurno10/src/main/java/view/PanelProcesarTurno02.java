@@ -19,8 +19,6 @@ public class PanelProcesarTurno02 extends javax.swing.JPanel implements Interfac
     private final ValidadorDeCampos validador;
 
     private final ProcesarTurnoController controlador;
-    
-    
 
     /**
      * Creates new form PanelEmpresa
@@ -28,20 +26,21 @@ public class PanelProcesarTurno02 extends javax.swing.JPanel implements Interfac
      * @param controlador
      */
     public PanelProcesarTurno02(ProcesarTurnoController controlador) {
-        
+
         initComponents();
         validador = new ValidadorDeCampos();
         habilitarTodosLosBotones(true);
         this.controlador = controlador;
 
+        cargarAreas();
+
+        this.jpb_estado_procesarTurno.setStringPainted(true);
+        this.jpb_estado_procesarTurno.setString("AREA");
         this.jpb_estado_procesarTurno.setValue(30);
         this.jpb_estado_procesarTurno.setForeground(new Color(220, 118, 51));
-        
 
-        this.jlbl_titulo.setBackground(new Color(30, 132, 73));
+        this.jlbl_titulo.setBackground(Color.BLACK);
         this.jlbl_titulo.setOpaque(true);
-
-        cargarAreas();
     }
 
     /**
@@ -53,14 +52,14 @@ public class PanelProcesarTurno02 extends javax.swing.JPanel implements Interfac
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jlbl_titulo = new javax.swing.JLabel();
+        jPanelProgreso = new javax.swing.JPanel();
         jpb_estado_procesarTurno = new javax.swing.JProgressBar();
+        jlbl_titulo = new javax.swing.JLabel();
         jPanel_Contenido = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jcb_area = new javax.swing.JComboBox<>();
-        jbtn_cancelar = new javax.swing.JButton();
         jbtn_siguiente = new javax.swing.JButton();
-        jlbl_paso = new javax.swing.JLabel();
+        jbtn_cancelar = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMaximumSize(new java.awt.Dimension(950, 750));
@@ -72,6 +71,31 @@ public class PanelProcesarTurno02 extends javax.swing.JPanel implements Interfac
         jlbl_titulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbl_titulo.setText("PROCESAR TURNO");
 
+        javax.swing.GroupLayout jPanelProgresoLayout = new javax.swing.GroupLayout(jPanelProgreso);
+        jPanelProgreso.setLayout(jPanelProgresoLayout);
+        jPanelProgresoLayout.setHorizontalGroup(
+            jPanelProgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelProgresoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelProgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jpb_estado_procesarTurno, javax.swing.GroupLayout.DEFAULT_SIZE, 910, Short.MAX_VALUE)
+                    .addComponent(jlbl_titulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanelProgresoLayout.setVerticalGroup(
+            jPanelProgresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelProgresoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jlbl_titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addComponent(jpb_estado_procesarTurno, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jPanel_Contenido.setMaximumSize(new java.awt.Dimension(930, 460));
+        jPanel_Contenido.setMinimumSize(new java.awt.Dimension(930, 460));
+        jPanel_Contenido.setPreferredSize(new java.awt.Dimension(930, 460));
+
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel2.setText("AREA");
 
@@ -81,10 +105,10 @@ public class PanelProcesarTurno02 extends javax.swing.JPanel implements Interfac
             jPanel_ContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_ContenidoLayout.createSequentialGroup()
                 .addGap(27, 27, 27)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(jcb_area, javax.swing.GroupLayout.PREFERRED_SIZE, 713, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
+                .addComponent(jcb_area, javax.swing.GroupLayout.PREFERRED_SIZE, 726, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel_ContenidoLayout.setVerticalGroup(
             jPanel_ContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -93,16 +117,8 @@ public class PanelProcesarTurno02 extends javax.swing.JPanel implements Interfac
                 .addGroup(jPanel_ContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jcb_area, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(286, Short.MAX_VALUE))
+                .addContainerGap(346, Short.MAX_VALUE))
         );
-
-        jbtn_cancelar.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        jbtn_cancelar.setText("CANCELAR");
-        jbtn_cancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtn_cancelarActionPerformed(evt);
-            }
-        });
 
         jbtn_siguiente.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         jbtn_siguiente.setText("SIGUIENTE");
@@ -112,45 +128,40 @@ public class PanelProcesarTurno02 extends javax.swing.JPanel implements Interfac
             }
         });
 
-        jlbl_paso.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbl_paso.setText("AREA");
+        jbtn_cancelar.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        jbtn_cancelar.setText("CANCELAR");
+        jbtn_cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtn_cancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jbtn_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 919, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jbtn_siguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 919, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jPanel_Contenido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jlbl_titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 929, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jlbl_paso, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jpb_estado_procesarTurno, javax.swing.GroupLayout.PREFERRED_SIZE, 685, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanelProgreso, javax.swing.GroupLayout.PREFERRED_SIZE, 929, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel_Contenido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbtn_siguiente, javax.swing.GroupLayout.DEFAULT_SIZE, 930, Short.MAX_VALUE)
+                    .addComponent(jbtn_cancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 10, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jlbl_titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jpb_estado_procesarTurno, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlbl_paso, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel_Contenido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
-                .addComponent(jbtn_siguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(jPanelProgreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(jPanel_Contenido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jbtn_siguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jbtn_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(56, 56, 56))
+                .addContainerGap())
         );
-
-        jlbl_paso.getAccessibleContext().setAccessibleName("PASO 1");
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_cancelarActionPerformed
@@ -167,16 +178,16 @@ public class PanelProcesarTurno02 extends javax.swing.JPanel implements Interfac
     }//GEN-LAST:event_jbtn_cancelarActionPerformed
 
     private void jbtn_siguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_siguienteActionPerformed
-        
+
         Area nuevaArea = (Area) this.jcb_area.getSelectedItem();
         this.controlador.getNuevoTurno().setUnAreaB(nuevaArea);
-        
+
         //Se crea el Panel Emplesa    
         PanelProcesarTurno03 unPaneProcesarTurno03 = new PanelProcesarTurno03(this.controlador);
         unPaneProcesarTurno03.setSize(950, 750);
         unPaneProcesarTurno03.setLocation(0, 0);
         unPaneProcesarTurno03.setVisible(true);
-        
+
         //JFramePrincipal.modificarPanelContenido(unPanelProcesarTurno02);
         JFramePrincipal.getjPanelContenido().removeAll();
         JFramePrincipal.getjPanelContenido().add(unPaneProcesarTurno03);
@@ -187,11 +198,11 @@ public class PanelProcesarTurno02 extends javax.swing.JPanel implements Interfac
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanelProgreso;
     private javax.swing.JPanel jPanel_Contenido;
     private javax.swing.JButton jbtn_cancelar;
     private javax.swing.JButton jbtn_siguiente;
     private javax.swing.JComboBox<String> jcb_area;
-    private javax.swing.JLabel jlbl_paso;
     private javax.swing.JLabel jlbl_titulo;
     private javax.swing.JProgressBar jpb_estado_procesarTurno;
     // End of variables declaration//GEN-END:variables

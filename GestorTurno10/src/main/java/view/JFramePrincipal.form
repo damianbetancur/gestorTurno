@@ -39,8 +39,9 @@
                   <Component id="jPanel3" pref="0" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Component id="jPanelArbol" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="jPanelContenido" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
