@@ -7,7 +7,6 @@ package view;
 
 import controller.ProcesarTramiteController;
 import java.awt.Color;
-import java.util.Vector;
 import model.Turno;
 import view.resources.TablaTurnoModelo;
 import view.resources.TablaTurnoProcesarTramiteModelListener;
@@ -464,6 +463,7 @@ public class PanelProcesarTramite01 extends javax.swing.JPanel implements Interf
         // si la fila esta seleccionada, seteamos la persona auxiliar, llamando al modelo de tabla
         if (filaSeleccionada >= 0) {
             this.turnoSeleccionado = this.tablaTurnoModelo.obtenerTurnoEn(filaSeleccionada);
+            
             this.jtf_fecha.setText(this.turnoSeleccionado.getFecha().toString());
             this.jtf_hora.setText(this.turnoSeleccionado.getUnaHoraTurno().getHoraTurno());
             this.jtf_estadoTurno.setText(this.turnoSeleccionado.getUnEstadoTurno().getNombre());

@@ -7,8 +7,9 @@ package model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -39,7 +40,7 @@ public class Area implements Serializable {
     private String nombre;
 
     @ManyToOne
-    @JoinColumn(name = "fk_organismo", nullable = false, updatable = false)
+    @JoinColumn(name = "fk_organismo", nullable = false, updatable = true)
     private Organismo unOrganismoA;
 
     @OneToMany(mappedBy = "unAreaA")
@@ -154,7 +155,57 @@ public class Area implements Serializable {
         this.tipoTramite = tipoTramite;
     }
 
-    
+    public List<Turno> buscarTurnosDelAreaPorEmpleado(Empleado unEmpleado, List<Turno> turnosDelArea) {
+        List<Turno> turnosEncontrados = new ArrayList<>();
+        for (Turno turnoRecorrido : turnosDelArea) {
+            if (turnoRecorrido.getUnEmpleado().getId().equals(unEmpleado.getId())) {
+                turnosEncontrados.add(turnoRecorrido);
+            }
+        }
+        return turnosEncontrados;
+    }
 
-    
+    public List<Turno> buscarTurnosDelAreaPorFecha(Date unaFecha, List<Turno> turnosDelArea) {
+        List<Turno> turnosEncontrados = new ArrayList<>();
+        for (Turno turnoRecorrido : turnosDelArea) {
+            if (compararFecha(turnoRecorrido.getFecha(), unaFecha)) {
+                turnosEncontrados.add(turnoRecorrido);
+            }
+        }
+        return turnosEncontrados;
+    }
+
+    public List<HorarioAtencionTurno> buscarHorariosNoDisponiblesParaTurnosDeUnEmpleado(Date unaFecha, Empleado unEmpleado) {
+        List<HorarioAtencionTurno> horariosDeAtencionNoDisponibles = new ArrayList<>();
+
+        for (Turno turnoRecorrido : buscarTurnosDelAreaPorFecha(unaFecha, this.buscarTurnosDelAreaPorEmpleado(unEmpleado, this.turnos))) {
+            horariosDeAtencionNoDisponibles.add(turnoRecorrido.getUnaHoraTurno());
+        }
+        return horariosDeAtencionNoDisponibles;
+    }
+
+    private boolean compararFecha(Date fechaA, Date fechaB) {
+        boolean comparacion = false;
+
+        Calendar calendario = Calendar.getInstance(); // fecha actual
+        calendario.setTime(fechaA); // fecha de turno
+        int aniofechaA = calendario.get(Calendar.YEAR);
+        int mesfechaA = calendario.get(Calendar.MONTH);
+        int diafechaA = calendario.get(Calendar.DAY_OF_MONTH) + 1;
+
+        calendario.setTime(fechaB); // fecha de turno
+        int aniofechaB = calendario.get(Calendar.YEAR);
+        int mesfechaB = calendario.get(Calendar.MONTH);
+        int diafechaB = calendario.get(Calendar.DAY_OF_MONTH);
+
+        if (aniofechaA == aniofechaB) {
+            if (mesfechaA == mesfechaB) {
+                if (diafechaA == diafechaB) {
+                    comparacion = true;
+                }
+            }
+        }
+        return comparacion;
+    }
+
 }

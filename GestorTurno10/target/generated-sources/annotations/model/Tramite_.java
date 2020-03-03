@@ -11,7 +11,7 @@ import model.RequisitoOpcional;
 import model.TipoTramite;
 import model.Turno;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2020-01-24T00:08:13")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2020-03-03T18:26:44")
 @StaticMetamodel(Tramite.class)
 public class Tramite_ { 
 

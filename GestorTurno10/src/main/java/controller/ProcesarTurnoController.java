@@ -14,7 +14,6 @@ import dao.TipoAtencionJpaController;
 import dao.TipoEmpleadoJpaController;
 import dao.TurnoJpaController;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
@@ -72,11 +71,11 @@ public class ProcesarTurnoController {
         return areasEncontrados;
     }
 
-    public Vector<TipoTramite> buscarTodosLosTramitesPorArea(Area unArea) {
-        Vector<TipoTramite> tiposTramitesEncontrados = new Vector<>();
+    public List<TipoTramite> buscarTodosLosTramitesPorArea(Area unArea) {
+        List<TipoTramite> tiposTramitesEncontrados = new ArrayList<>();
         for (Area areaRecorrido : areaDAO.findAreaEntities()) {
             if (unArea.getId().equals(areaRecorrido.getId())) {
-                tiposTramitesEncontrados = (Vector<TipoTramite>) areaRecorrido.getTipoTramite();
+                tiposTramitesEncontrados = (List<TipoTramite>) areaRecorrido.getTipoTramite();
             }
         }
         return tiposTramitesEncontrados;
@@ -118,8 +117,8 @@ public class ProcesarTurnoController {
         return empleadosEncontrados;
     }
 
-    public Vector<TipoEmpleado> buscarTodosLosTiposDeEmpleados() {
-        Vector<TipoEmpleado> tiposEmpleadosEncontrados = new Vector<>();
+    public List<TipoEmpleado> buscarTodosLosTiposDeEmpleados() {
+        List<TipoEmpleado> tiposEmpleadosEncontrados = new ArrayList<>();
         for (TipoEmpleado tipoEmpleadoRecorrido : tipoEmpleadoDAO.findTipoEmpleadoEntities()) {
             tiposEmpleadosEncontrados.add(tipoEmpleadoRecorrido);
         }
@@ -135,69 +134,24 @@ public class ProcesarTurnoController {
     }
 
     public Vector<HorarioAtencionTurno> buscarHorariosDeTurnoDisponibles(Area unArea, Empleado unEmpleado, Date unaFecha) {
-
-        Vector<HorarioAtencionTurno> horariosDeAtencionDisponibles = new Vector<>();
-
-        ArrayList<HorarioAtencionTurno> horarioNoDisponible = new ArrayList<>();
-
-        //Todos los turnos de un area
-        for (Turno turnoRecorrido : areaDAO.findArea(unArea.getId()).getTurnos()) {
-            if (compararFecha(unaFecha, turnoRecorrido.getFecha())) {
-                if (unEmpleado.getId().equals(turnoRecorrido.getUnEmpleado().getId())) {
-                    horarioNoDisponible.add(turnoRecorrido.getUnaHoraTurno());
+        List<HorarioAtencionTurno> horariosDeAtencionNoDisponibles = areaDAO.findArea(unArea.getId()).buscarHorariosNoDisponiblesParaTurnosDeUnEmpleado(unaFecha, unEmpleado);
+        Vector<HorarioAtencionTurno> horariosDeAtencionDisponibles = new Vector<>();        
+        
+        for (HorarioAtencionTurno horarioAtencionTurnoRecorrido : horarioTurnoDAO.findHorarioAtencionTurnoEntities()) {
+            horariosDeAtencionDisponibles.add(horarioAtencionTurnoRecorrido);
+            for (HorarioAtencionTurno horariosDeAtencionNoDisponible : horariosDeAtencionNoDisponibles) {                
+                if (horariosDeAtencionNoDisponible.equals(horarioAtencionTurnoRecorrido)) {
+                    horariosDeAtencionDisponibles.remove(horarioAtencionTurnoRecorrido);  
                 }
             }
         }
-
-        if (!horarioNoDisponible.isEmpty()) {
-            for (HorarioAtencionTurno horarioAtencionTurnoRecorrido : horarioTurnoDAO.findHorarioAtencionTurnoEntities()) {
-
-                horariosDeAtencionDisponibles.add(horarioAtencionTurnoRecorrido);
-                for (HorarioAtencionTurno horarioAtencionTurno : horarioNoDisponible) {
-                    if (horarioAtencionTurno.getId().equals(horarioAtencionTurnoRecorrido.getId())) {
-                        horariosDeAtencionDisponibles.remove(horarioAtencionTurno);
-                    }
-                }
-            }
-
-        } else {
-            for (HorarioAtencionTurno horarioAtencionTurnoRecorrido : horarioTurnoDAO.findHorarioAtencionTurnoEntities()) {
-                horariosDeAtencionDisponibles.add(horarioAtencionTurnoRecorrido);
-            }
-        }
-
         return horariosDeAtencionDisponibles;
+        
     }
 
     public void crearNuevoTurno(Turno nuevoTurno) {
         nuevoTurno.setUnEstadoTurno(estadoTurnoDAO.findEstadoTurno(1l));
         turnoDAO.create(nuevoTurno);
-
-    }
-
-    private boolean compararFecha(Date fechaA, Date fechaB) {
-        boolean comparacion = false;
-
-        Calendar calendario = Calendar.getInstance(); // fecha actual
-        calendario.setTime(fechaA); // fecha de turno
-        int aniofechaA = calendario.get(Calendar.YEAR);
-        int mesfechaA = calendario.get(Calendar.MONTH);
-        int diafechaA = calendario.get(Calendar.DAY_OF_MONTH);
-
-        calendario.setTime(fechaB); // fecha de turno
-        int aniofechaB = calendario.get(Calendar.YEAR);
-        int mesfechaB = calendario.get(Calendar.MONTH);
-        int diafechaB = calendario.get(Calendar.DAY_OF_MONTH);
-
-        if (aniofechaA == aniofechaB) {
-            if (mesfechaA == mesfechaB) {
-                if (diafechaA == diafechaB) {
-                    comparacion = true;
-                }
-            }
-        }
-
-        return comparacion;
     }
 
 }

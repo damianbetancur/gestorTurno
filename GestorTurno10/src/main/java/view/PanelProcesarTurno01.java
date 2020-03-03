@@ -27,7 +27,7 @@ public class PanelProcesarTurno01 extends javax.swing.JPanel implements Interfac
     private final TablaPersonaModelo tablaPersonaModelo;
 
     //variables de comboBox
-    private DefaultComboBoxModel tipoPersonaModel;
+    private final DefaultComboBoxModel tipoPersonaModel;
 
     private final PersonaController controladorPersona;
     private ProcesarTurnoController controlador;
@@ -75,7 +75,7 @@ public class PanelProcesarTurno01 extends javax.swing.JPanel implements Interfac
         this.validador.LimitarCaracteres(this.jtf_apellido, 30);
 
         this.jpb_estado_procesarTurno.setStringPainted(true);
-        this.jpb_estado_procesarTurno.setString("persona");
+        this.jpb_estado_procesarTurno.setString("Seleccionar Persona");
         this.jpb_estado_procesarTurno.setValue(15);
         this.jpb_estado_procesarTurno.setForeground(new Color(220, 118, 51));
 

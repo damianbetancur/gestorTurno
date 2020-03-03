@@ -23,7 +23,7 @@ import javax.persistence.TemporalType;
  * @author USER
  */
 @Entity
-public class Turno implements Serializable {
+public class Turno implements Serializable, Comparable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -31,7 +31,7 @@ public class Turno implements Serializable {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "fk_area", nullable = false, updatable = false)
+    @JoinColumn(name = "fk_area", nullable = false, updatable = true)
     private Area unAreaB;
 
     @Temporal(TemporalType.DATE)
@@ -42,7 +42,7 @@ public class Turno implements Serializable {
     @JoinColumn(name = "fk_hora_turno")
     private HorarioAtencionTurno unaHoraTurno;
 
-    @ManyToOne(cascade=CascadeType.REMOVE)
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "fk_persona")
     private Persona unaPersona;
 
@@ -114,7 +114,6 @@ public class Turno implements Serializable {
         this.fecha = fecha;
     }
 
-
     public Persona getUnaPersona() {
         return unaPersona;
     }
@@ -163,6 +162,28 @@ public class Turno implements Serializable {
         this.unaHoraTurno = unaHoraTurno;
     }
 
-    
-    
+    @Override
+    public int compareTo(Object o) {
+        Turno unTurno = (Turno) o;
+
+        //1-Se busca por area
+        if (this.unAreaB.getId().compareTo(unTurno.getUnAreaB().getId()) == 0) {
+            //2- Se busca por fecha
+            if (this.fecha.compareTo(unTurno.getFecha()) == 0) {
+                //3-Se busca por Empleado
+                if (this.unEmpleado.getId().compareTo(unTurno.getUnEmpleado().getId()) == 0) {
+                    //4-Se ordena por estado
+                    return this.unEstadoTurno.getId().compareTo(unTurno.getUnEstadoTurno().getId());
+                } else {
+                    return this.unEmpleado.getId().compareTo(unTurno.getUnEmpleado().getId());
+                }
+            } else {
+                return this.fecha.compareTo(unTurno.getFecha());
+            }
+        } else {
+            return this.unAreaB.getId().compareTo(unTurno.getUnAreaB().getId());
+        }
+
+    }
+
 }

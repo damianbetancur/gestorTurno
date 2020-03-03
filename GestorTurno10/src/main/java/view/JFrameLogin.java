@@ -5,7 +5,7 @@
  */
 package view;
 
-import dao.Conexion;
+
 import controller.LoginController;
 import java.awt.event.KeyEvent;
 import model.Usuario;
@@ -25,8 +25,6 @@ public class JFrameLogin extends javax.swing.JFrame {
      */
     public JFrameLogin() {
         initComponents();
-        //inicia la conexion
-        new Conexion();
         // instanciar controlador
         this.controlador = new LoginController();
         this.usuarioAuxiliar = new Usuario();

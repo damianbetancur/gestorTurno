@@ -6,6 +6,7 @@
 package view;
 
 import controller.ProcesarTurnoController;
+import dao.Conexion;
 import java.awt.Color;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
@@ -52,7 +53,7 @@ public class PanelProcesarTurno07 extends javax.swing.JPanel implements Interfac
         
 
         this.jpb_estado_procesarTurno.setStringPainted(true);
-        this.jpb_estado_procesarTurno.setString("FINALIZAR");
+        this.jpb_estado_procesarTurno.setString("Confirmar nuevo Turno");
         this.jpb_estado_procesarTurno.setValue(100);
         this.jpb_estado_procesarTurno.setForeground(new Color(220, 118, 51));
 

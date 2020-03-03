@@ -41,7 +41,7 @@ public class Tramite implements Serializable {
     private Date hora;
 
     @ManyToOne
-    @JoinColumn(name = "fk_area", nullable = false, updatable = false)
+    @JoinColumn(name = "fk_area", nullable = false, updatable = true)
     private Area unAreaC;
 
     @ManyToOne

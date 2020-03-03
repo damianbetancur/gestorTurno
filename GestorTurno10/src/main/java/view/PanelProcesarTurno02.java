@@ -7,6 +7,7 @@ package view;
 
 import controller.ProcesarTurnoController;
 import java.awt.Color;
+import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import model.Area;
 
@@ -35,7 +36,7 @@ public class PanelProcesarTurno02 extends javax.swing.JPanel implements Interfac
         cargarAreas();
 
         this.jpb_estado_procesarTurno.setStringPainted(true);
-        this.jpb_estado_procesarTurno.setString("AREA");
+        this.jpb_estado_procesarTurno.setString("Seleccionar un AREA");
         this.jpb_estado_procesarTurno.setValue(30);
         this.jpb_estado_procesarTurno.setForeground(new Color(220, 118, 51));
 

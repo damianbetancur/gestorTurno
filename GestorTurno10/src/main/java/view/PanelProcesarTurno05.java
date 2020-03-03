@@ -7,6 +7,7 @@ package view;
 
 import controller.ProcesarTurnoController;
 import java.awt.Color;
+import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import model.TipoAtencion;
 
@@ -35,7 +36,7 @@ public class PanelProcesarTurno05 extends javax.swing.JPanel implements Interfac
         cargarTiposDeAtencion();
 
         this.jpb_estado_procesarTurno.setStringPainted(true);
-        this.jpb_estado_procesarTurno.setString("TIPO DE ATENCIÓN");
+        this.jpb_estado_procesarTurno.setString("Seleccionar un TIPO DE ATENCIÓN");
         this.jpb_estado_procesarTurno.setValue(75);
         this.jpb_estado_procesarTurno.setForeground(new Color(220, 118, 51));
 

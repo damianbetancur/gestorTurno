@@ -89,7 +89,7 @@ public class HorarioAtencionTurnoJpaController implements Serializable {
         }
     }
 
-    public List<HorarioAtencionTurno> findHorarioAtencionTurnoEntities() {        
+    public List<HorarioAtencionTurno> findHorarioAtencionTurnoEntities() {
         return findHorarioAtencionTurnoEntities(true, -1, -1);
     }
 

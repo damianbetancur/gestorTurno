@@ -7,6 +7,7 @@ package view;
 
 import controller.ProcesarTurnoController;
 import java.awt.Color;
+import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import model.TipoTramite;
 
@@ -35,7 +36,7 @@ public class PanelProcesarTurno03 extends javax.swing.JPanel implements Interfac
         cargarTipoDeTramites();
 
         this.jpb_estado_procesarTurno.setStringPainted(true);
-        this.jpb_estado_procesarTurno.setString("TIPO TRAMITE");
+        this.jpb_estado_procesarTurno.setString("Seleccionar un TIPO TRAMITE");
         this.jpb_estado_procesarTurno.setValue(45);
         this.jpb_estado_procesarTurno.setForeground(new Color(220, 118, 51));
 
@@ -225,7 +226,7 @@ public class PanelProcesarTurno03 extends javax.swing.JPanel implements Interfac
      * Carga las Areas el el JComboBox area
      */
     public void cargarTipoDeTramites() {
-        DefaultComboBoxModel mdl = new DefaultComboBoxModel(this.controlador.buscarTodosLosTramitesPorArea(this.controlador.getNuevoTurno().getUnAreaB()));
+        DefaultComboBoxModel mdl = new DefaultComboBoxModel((Vector) this.controlador.buscarTodosLosTramitesPorArea(this.controlador.getNuevoTurno().getUnAreaB()));
         this.jcb_tipoTramite.setModel(mdl);
     }
 }

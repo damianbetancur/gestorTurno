@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package controller;
+import dao.Conexion;
 import view.JFrameLogin;
 
 /**
@@ -12,7 +13,7 @@ import view.JFrameLogin;
  */
 public class Main {
     public static void main(String[] args) {   
-        
+        new Conexion();
         JFrameLogin vista = new JFrameLogin();
         vista.arranca();
     }

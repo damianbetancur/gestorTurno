@@ -9,6 +9,7 @@ import controller.ProcesarTurnoController;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import model.Empleado;
 import view.resources.TablaEmpleadoModelo;
@@ -75,7 +76,7 @@ public class PanelProcesarTurno04 extends javax.swing.JPanel implements Interfac
         this.validador.LimitarCaracteres(this.jtf_apellido, 30);
 
         this.jpb_estado_procesarTurno.setStringPainted(true);
-        this.jpb_estado_procesarTurno.setString("EMPLEADO");
+        this.jpb_estado_procesarTurno.setString("Seleccionar un EMPLEADO");
         this.jpb_estado_procesarTurno.setValue(60);
         this.jpb_estado_procesarTurno.setForeground(new Color(220, 118, 51));
 
@@ -529,7 +530,7 @@ public class PanelProcesarTurno04 extends javax.swing.JPanel implements Interfac
      * Carga los tipos de persona el el JComboBox tipo de persona
      */
     public void cargarTiposDePersona() {
-        DefaultComboBoxModel mdl = new DefaultComboBoxModel(this.controlador.buscarTodosLosTiposDeEmpleados());
+        DefaultComboBoxModel mdl = new DefaultComboBoxModel((Vector) this.controlador.buscarTodosLosTiposDeEmpleados());
         this.jcb_tipoEmpleado.setModel(mdl);
     }
 

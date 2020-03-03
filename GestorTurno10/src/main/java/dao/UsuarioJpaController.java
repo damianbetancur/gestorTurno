@@ -187,6 +187,7 @@ public class UsuarioJpaController implements Serializable {
         return usuario;
     }
     
+    
     public Usuario verificarUsuario(Usuario us){
         EntityManager em = getEntityManager();
         Usuario usuario = null;

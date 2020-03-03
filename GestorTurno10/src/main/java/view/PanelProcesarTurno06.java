@@ -9,6 +9,7 @@ import com.toedter.calendar.JTextFieldDateEditor;
 import controller.ProcesarTurnoController;
 import java.awt.Color;
 import java.util.Date;
+import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import model.HorarioAtencionTurno;
@@ -19,6 +20,9 @@ import model.HorarioAtencionTurno;
  */
 public class PanelProcesarTurno06 extends javax.swing.JPanel implements InterfacePanel {
 
+    //variables de comboBox
+    private DefaultComboBoxModel tipoHorarioAtencionModel;
+    
     private final ValidadorDeCampos validador;
 
     private final ProcesarTurnoController controlador;
@@ -30,6 +34,9 @@ public class PanelProcesarTurno06 extends javax.swing.JPanel implements Interfac
      */
     public PanelProcesarTurno06(ProcesarTurnoController controlador) {
 
+        //JComboBox vacio
+        this.tipoHorarioAtencionModel = new DefaultComboBoxModel();
+        
         initComponents();
         validador = new ValidadorDeCampos();
         habilitarTodosLosBotones(true);
@@ -46,13 +53,14 @@ public class PanelProcesarTurno06 extends javax.swing.JPanel implements Interfac
         this.validador.habilitarBoton(true, this.jbtn_cancelar, Color.RED, Color.WHITE, null, null);
 
         this.jpb_estado_procesarTurno.setStringPainted(true);
-        this.jpb_estado_procesarTurno.setString("FECHA y HORA");
+        this.jpb_estado_procesarTurno.setString("Seleccionar una FECHA y HORA");
         this.jpb_estado_procesarTurno.setValue(90);
         this.jpb_estado_procesarTurno.setForeground(new Color(220, 118, 51));
 
         this.jlbl_titulo.setBackground(Color.BLACK);
         this.jlbl_titulo.setOpaque(true);
 
+        this.jcb_horarioAtencion.setModel(tipoHorarioAtencionModel);
         repaint();
 
     }
@@ -118,6 +126,7 @@ public class PanelProcesarTurno06 extends javax.swing.JPanel implements Interfac
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel2.setText("HORARIO ATENCIÓN");
 
+        jcb_horarioAtencion.setModel(tipoHorarioAtencionModel);
         jcb_horarioAtencion.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jcb_horarioAtencionFocusGained(evt);
@@ -256,16 +265,15 @@ public class PanelProcesarTurno06 extends javax.swing.JPanel implements Interfac
 
     private void jcb_horarioAtencionFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jcb_horarioAtencionFocusGained
 
-        Date fechaSeleccionada;
-
-        fechaSeleccionada = jdc_fechaDeTurno.getDate();
+        Date fechaSeleccionada = jdc_fechaDeTurno.getDate();
 
         if (fechaSeleccionada != null) {
             if (validador.calcularFechaTurno(fechaSeleccionada)) {
                 this.validador.habilitarBoton(true, this.jbtn_siguiente, new Color(30, 132, 73), Color.WHITE, null, null);
                 this.validador.habilitarCombobox(true, jcb_horarioAtencion);
                 if (jcb_horarioAtencion.isEnabled()) {
-                    jcb_horarioAtencion.removeAllItems();
+                    jcb_horarioAtencion.removeAllItems();                    
+                            //fireTableDataChanged();
                     cargarHorarios(fechaSeleccionada);
                 }
 
@@ -329,8 +337,16 @@ public class PanelProcesarTurno06 extends javax.swing.JPanel implements Interfac
      * @param unaFecha
      */
     public void cargarHorarios(Date unaFecha) {
-        DefaultComboBoxModel mdl = new DefaultComboBoxModel(this.controlador.buscarHorariosDeTurnoDisponibles(this.controlador.getNuevoTurno().getUnAreaB(), this.controlador.getNuevoTurno().getUnEmpleado(), unaFecha));
-        this.jcb_horarioAtencion.setModel(mdl);
+        
+        this.tipoHorarioAtencionModel.removeAllElements();
+        
+        
+        this.tipoHorarioAtencionModel = new DefaultComboBoxModel( this.controlador.buscarHorariosDeTurnoDisponibles(this.controlador.getNuevoTurno().getUnAreaB(), 
+                                                                                                                       this.controlador.getNuevoTurno().getUnEmpleado(), 
+                                                                                                                       unaFecha));
+        
+        this.jcb_horarioAtencion.setModel(this.tipoHorarioAtencionModel);
+        this.validate();
     }
 
 }
