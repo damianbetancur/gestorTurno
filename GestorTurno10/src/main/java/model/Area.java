@@ -155,19 +155,9 @@ public class Area implements Serializable {
         this.tipoTramite = tipoTramite;
     }
 
-    public List<Turno> buscarTurnosDelAreaPorEmpleado(Empleado unEmpleado, List<Turno> turnosDelArea) {
+    public List<Turno> buscarTurnosPorFecha(Date unaFecha) {
         List<Turno> turnosEncontrados = new ArrayList<>();
-        for (Turno turnoRecorrido : turnosDelArea) {
-            if (turnoRecorrido.getUnEmpleado().getId().equals(unEmpleado.getId())) {
-                turnosEncontrados.add(turnoRecorrido);
-            }
-        }
-        return turnosEncontrados;
-    }
-
-    public List<Turno> buscarTurnosDelAreaPorFecha(Date unaFecha, List<Turno> turnosDelArea) {
-        List<Turno> turnosEncontrados = new ArrayList<>();
-        for (Turno turnoRecorrido : turnosDelArea) {
+        for (Turno turnoRecorrido : this.turnos) {
             if (compararFecha(turnoRecorrido.getFecha(), unaFecha)) {
                 turnosEncontrados.add(turnoRecorrido);
             }
@@ -175,14 +165,35 @@ public class Area implements Serializable {
         return turnosEncontrados;
     }
 
-    public List<HorarioAtencionTurno> buscarHorariosNoDisponiblesParaTurnosDeUnEmpleado(Date unaFecha, Empleado unEmpleado) {
-        List<HorarioAtencionTurno> horariosDeAtencionNoDisponibles = new ArrayList<>();
-
-        for (Turno turnoRecorrido : buscarTurnosDelAreaPorFecha(unaFecha, this.buscarTurnosDelAreaPorEmpleado(unEmpleado, this.turnos))) {
-            horariosDeAtencionNoDisponibles.add(turnoRecorrido.getUnaHoraTurno());
+    public List<Turno> buscarTurnosDelEmpleado(Empleado unEmpleado) {
+        List<Turno> turnosEncontrados = new ArrayList<>();
+        for (Turno turnoRecorrido : this.turnos) {
+            if (turnoRecorrido.getUnEmpleado().getId().equals(unEmpleado.getId())) {
+                turnosEncontrados.add(turnoRecorrido);
+            }
         }
-        return horariosDeAtencionNoDisponibles;
+        return turnosEncontrados;
     }
+
+    public List<Turno> buscarTurnosDelEmpleadoPorFecha(Empleado unEmpleado, Date unaFecha) {
+        List<Turno> turnosEncontrados = new ArrayList<>();
+        for (Turno turnoRecorrido : buscarTurnosDelEmpleado(unEmpleado)) {
+            if (compararFecha(turnoRecorrido.getFecha(), unaFecha)) {
+                turnosEncontrados.add(turnoRecorrido);
+            }
+        }
+        return turnosEncontrados;
+    }
+    
+    public List<Turno> priorizarTurno(List<Turno> turnosDesorganizados) {
+        List<Turno> turnosEncontrados = new ArrayList<>();
+        
+        //1 Ordenar por fecha 
+        for (Turno turnosDesorganizado : turnosDesorganizados) {
+            
+        }
+        return turnosEncontrados;
+    } 
 
     private boolean compararFecha(Date fechaA, Date fechaB) {
         boolean comparacion = false;

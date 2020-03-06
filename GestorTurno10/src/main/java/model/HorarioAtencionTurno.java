@@ -23,7 +23,7 @@ public class HorarioAtencionTurno implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    private String horaTurno; 
+    private String horaTurno;
 
     public HorarioAtencionTurno() {
     }
@@ -70,6 +70,5 @@ public class HorarioAtencionTurno implements Serializable {
     public void setHoraTurno(String horaTurno) {
         this.horaTurno = horaTurno;
     }
-    
-    
+
 }

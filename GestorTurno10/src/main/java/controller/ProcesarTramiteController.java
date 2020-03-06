@@ -14,9 +14,9 @@ import dao.TipoAtencionJpaController;
 import dao.TipoEmpleadoJpaController;
 import dao.TurnoJpaController;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collections;
-import static java.util.Collections.list;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import model.Tramite;
@@ -74,45 +74,18 @@ public class ProcesarTramiteController {
     }
 
     public List<Turno> buscarTodosLosTurnosDeUnEmpleadoEnElDiaActual() {
-        List<Turno> turnosParaAtender = new ArrayList<>();
+        List<Turno> turnosParaAtenderA = new ArrayList<>();
+        List<Turno> turnosParaAtenderOrdenado = turnoDAO.buscarTurnosDelEmpleado(LoginController.getInstanceUsuario().getUnEmpleado().getUnAreaA(), LoginController.getInstanceUsuario().getUnEmpleado(), estadoTurnoDAO.findEstadoTurno(1l), new Date());
         //Todos los turnos de un area
-        for (Turno turnoRecorrido : areaDAO.findArea(LoginController.getInstanceUsuario().getUnEmpleado().getUnAreaA().getId()).getTurnos()) {
-            if (compararFecha(turnoRecorrido.getFecha())) {
-                if (LoginController.getInstanceUsuario().getUnEmpleado().getId().equals(turnoRecorrido.getUnEmpleado().getId())) {
-                    if (turnoRecorrido.getUnEstadoTurno().getNombre().equals("En Espera")) {
-                        turnosParaAtender.add(turnoRecorrido);
-                    }
-                }
-            }
+        for (Turno tr : turnosParaAtenderOrdenado) {
+            turnosParaAtenderA.add(tr);
         }
-        ordenarTurnos(turnosParaAtender);
-        return turnosParaAtender;
+        
+        
+        return turnosParaAtenderA;
     }
     
-    private boolean compararFecha(Date fechaB) {
-        boolean comparacion = false;
-
-        Calendar calendario = Calendar.getInstance(); // fecha actual        
-        int aniofechaA = calendario.get(Calendar.YEAR);
-        int mesfechaA = calendario.get(Calendar.MONTH);
-        int diafechaA = calendario.get(Calendar.DAY_OF_MONTH)+1;
-
-        calendario.setTime(fechaB); // fecha de turno
-        int aniofechaB = calendario.get(Calendar.YEAR);
-        int mesfechaB = calendario.get(Calendar.MONTH);
-        int diafechaB = calendario.get(Calendar.DAY_OF_MONTH)+2;
-        if (aniofechaA == aniofechaB) {
-            if (mesfechaA == mesfechaB) {
-                if (diafechaA == diafechaB) {
-                    comparacion = true;
-                }
-            }
-        }
-        return comparacion;
-    }
     
-    private void ordenarTurnos(List<Turno> turnos){
-        Collections.sort(turnos);
-    }
+    
 
 }

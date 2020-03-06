@@ -69,6 +69,4 @@ public class EstadoTurno implements Serializable {
         this.nombre = nombre;
     }
 
-    
-    
 }

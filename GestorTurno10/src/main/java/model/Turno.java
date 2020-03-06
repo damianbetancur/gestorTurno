@@ -7,7 +7,6 @@ package model;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,7 +22,7 @@ import javax.persistence.TemporalType;
  * @author USER
  */
 @Entity
-public class Turno implements Serializable, Comparable {
+public class Turno implements Serializable, Comparable<Turno> {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -42,7 +41,7 @@ public class Turno implements Serializable, Comparable {
     @JoinColumn(name = "fk_hora_turno")
     private HorarioAtencionTurno unaHoraTurno;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "fk_persona")
     private Persona unaPersona;
 
@@ -163,27 +162,35 @@ public class Turno implements Serializable, Comparable {
     }
 
     @Override
-    public int compareTo(Object o) {
-        Turno unTurno = (Turno) o;
-
+    public int compareTo(Turno unTurno) {
+        int resultado = 0;
         //1-Se busca por area
-        if (this.unAreaB.getId().compareTo(unTurno.getUnAreaB().getId()) == 0) {
+        if (this.unAreaB.getId() < unTurno.getUnAreaB().getId()) {
             //2- Se busca por fecha
-            if (this.fecha.compareTo(unTurno.getFecha()) == 0) {
+            if (this.fecha.before(unTurno.getFecha())) {
                 //3-Se busca por Empleado
-                if (this.unEmpleado.getId().compareTo(unTurno.getUnEmpleado().getId()) == 0) {
+                if (this.unEmpleado.getId() < unTurno.getUnEmpleado().getId()) {
                     //4-Se ordena por estado
-                    return this.unEstadoTurno.getId().compareTo(unTurno.getUnEstadoTurno().getId());
-                } else {
-                    return this.unEmpleado.getId().compareTo(unTurno.getUnEmpleado().getId());
+                    if (this.unEstadoTurno.getId() < unTurno.getUnEstadoTurno().getId()) {
+                        //5-Se ordena por Tipo de Atencion
+                        if (this.unTipoAtencion.getId() < unTurno.getUnTipoAtencion().getId()) {
+                            resultado = 1;
+                        }else{
+                            resultado = -1;
+                        }
+                    }else{
+                        resultado = -1;
+                    }
                 }
-            } else {
-                return this.fecha.compareTo(unTurno.getFecha());
+            }else{
+                resultado = -1;
             }
-        } else {
-            return this.unAreaB.getId().compareTo(unTurno.getUnAreaB().getId());
+        }else{
+            resultado = -1;
         }
-
+        
+        return resultado;
     }
 
+    //
 }

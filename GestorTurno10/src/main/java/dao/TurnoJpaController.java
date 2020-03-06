@@ -7,14 +7,20 @@ package dao;
 
 import dao.exceptions.NonexistentEntityException;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.TemporalType;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import model.Area;
+import model.Empleado;
+import model.EstadoTurno;
+import model.HorarioAtencionTurno;
 import model.Turno;
 
 /**
@@ -165,4 +171,46 @@ public class TurnoJpaController implements Serializable {
         }
     }
     
+    public List<HorarioAtencionTurno> horarioTurnosDisponibles(Area a, Empleado e, Date unaFecha) {
+        EntityManager em = getEntityManager();
+        List <HorarioAtencionTurno> horariosDisponibles = new ArrayList<>();
+        String consulta;
+        try {
+            consulta ="SELECT hat FROM HorarioAtencionTurno AS hat "
+                                                                   + "WHERE hat.id not in ("
+                                                                   + "SELECT t.unaHoraTurno.id FROM Turno AS t WHERE t.unAreaB.id = ?1 and t.unEmpleado.id = ?2 and t.fecha = ?3)";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, a.getId());
+            query.setParameter(2, e.getId());
+            query.setParameter(3, unaFecha, TemporalType.DATE);
+            
+            horariosDisponibles = query.getResultList();
+        } catch (Exception ex) {
+            throw ex;
+        } finally{
+            em.close();
+        }
+        return horariosDisponibles;
+    }
+    
+    public List<Turno> buscarTurnosDelEmpleado(Area a, Empleado e, EstadoTurno et, Date unaFecha) {
+        EntityManager em = getEntityManager();
+        List <Turno> turnos = new ArrayList<>();
+        String consulta;
+        try {
+            consulta ="SELECT t FROM Turno AS t WHERE t.unAreaB.id = ?1 and t.unEmpleado.id = ?2 and t.unEstadoTurno.id = ?3 and t.fecha = ?4 ORDER BY t.unTipoAtencion DESC";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, a.getId());
+            query.setParameter(2, e.getId());
+            query.setParameter(3, et.getId());
+            query.setParameter(4, unaFecha, TemporalType.DATE);
+            
+            turnos = query.getResultList();
+        } catch (Exception ex) {
+            throw ex;
+        } finally{
+            em.close();
+        }
+        return turnos;
+    }
 }

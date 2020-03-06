@@ -22,14 +22,12 @@ public class TipoAtencion implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+
     private String nombre;
+    private int prioridad;
 
     public TipoAtencion() {
     }
-    
-    
-    
 
     public Long getId() {
         return id;
@@ -71,5 +69,13 @@ public class TipoAtencion implements Serializable {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    
+
+    public int getPrioridad() {
+        return prioridad;
+    }
+
+    public void setPrioridad(int prioridad) {
+        this.prioridad = prioridad;
+    }
+
 }

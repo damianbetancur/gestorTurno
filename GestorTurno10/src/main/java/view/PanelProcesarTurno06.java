@@ -272,8 +272,7 @@ public class PanelProcesarTurno06 extends javax.swing.JPanel implements Interfac
                 this.validador.habilitarBoton(true, this.jbtn_siguiente, new Color(30, 132, 73), Color.WHITE, null, null);
                 this.validador.habilitarCombobox(true, jcb_horarioAtencion);
                 if (jcb_horarioAtencion.isEnabled()) {
-                    jcb_horarioAtencion.removeAllItems();                    
-                            //fireTableDataChanged();
+                    jcb_horarioAtencion.removeAllItems();    
                     cargarHorarios(fechaSeleccionada);
                 }
 
@@ -298,6 +297,7 @@ public class PanelProcesarTurno06 extends javax.swing.JPanel implements Interfac
             this.jcb_horarioAtencion.removeAllItems();
             this.validador.habilitarBoton(false, this.jbtn_siguiente, new Color(30, 132, 73), Color.WHITE, null, null);
             this.validador.habilitarCombobox(false, jcb_horarioAtencion);
+            this.jcb_horarioAtencion.validate();
         }
 
     }//GEN-LAST:event_jdc_fechaDeTurnoMouseClicked
@@ -341,12 +341,18 @@ public class PanelProcesarTurno06 extends javax.swing.JPanel implements Interfac
         this.tipoHorarioAtencionModel.removeAllElements();
         
         
-        this.tipoHorarioAtencionModel = new DefaultComboBoxModel( this.controlador.buscarHorariosDeTurnoDisponibles(this.controlador.getNuevoTurno().getUnAreaB(), 
+        this.tipoHorarioAtencionModel = new DefaultComboBoxModel();
+        
+        for (HorarioAtencionTurno horarioDeTurnoDisponible : this.controlador.buscarHorariosDeTurnoDisponibles(this.controlador.getNuevoTurno().getUnAreaB(), 
                                                                                                                        this.controlador.getNuevoTurno().getUnEmpleado(), 
-                                                                                                                       unaFecha));
+                                                                                                                       unaFecha)) {
+            tipoHorarioAtencionModel.addElement(horarioDeTurnoDisponible);
+        }
         
         this.jcb_horarioAtencion.setModel(this.tipoHorarioAtencionModel);
-        this.validate();
+        repaint();
+        
+        
     }
 
 }

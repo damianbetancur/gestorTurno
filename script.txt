@@ -82,11 +82,11 @@ INSERT INTO `turnos01`.`empleado` (`ID`, `APELLIDO`, `DNI`, `NOMBRE`, `fk_area`,
 
 
 /* Tipo Atencion*/
-INSERT INTO `turnos01`.`tipoatencion` (`ID`, `NOMBRE`) VALUES ('1', 'Normal');
-INSERT INTO `turnos01`.`tipoatencion` (`ID`, `NOMBRE`) VALUES ('2', 'Anciano');
-INSERT INTO `turnos01`.`tipoatencion` (`ID`, `NOMBRE`) VALUES ('3', 'Embarazada');
-INSERT INTO `turnos01`.`tipoatencion` (`ID`, `NOMBRE`) VALUES ('4', 'Persona con menor de 2 años');
-INSERT INTO `turnos01`.`tipoatencion` (`ID`, `NOMBRE`) VALUES ('5', 'Persona con capacidad Reducida');
+INSERT INTO `turnos01`.`tipoatencion` (`ID`, `NOMBRE`, `PRIORIDAD`) VALUES ('1', 'Normal', '2');
+INSERT INTO `turnos01`.`tipoatencion` (`ID`, `NOMBRE`, `PRIORIDAD`) VALUES ('2', 'Anciano', '1');
+INSERT INTO `turnos01`.`tipoatencion` (`ID`, `NOMBRE`, `PRIORIDAD`) VALUES ('3', 'Embarazada', '1');
+INSERT INTO `turnos01`.`tipoatencion` (`ID`, `NOMBRE`, `PRIORIDAD`) VALUES ('4', 'Persona con menor de 2 años', '1');
+INSERT INTO `turnos01`.`tipoatencion` (`ID`, `NOMBRE`, `PRIORIDAD`) VALUES ('5', 'Persona con capacidad Reducida', '1');
 
 /* rel_Tipo_Tramite_area*/
 INSERT INTO `turnos01`.`rel_tipo_tramite_area` (`FK_Tipo_Tramite`, `FK_Area`) VALUES ('2', '1');

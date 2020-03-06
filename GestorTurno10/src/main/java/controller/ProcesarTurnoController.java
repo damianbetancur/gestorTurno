@@ -134,19 +134,13 @@ public class ProcesarTurnoController {
     }
 
     public Vector<HorarioAtencionTurno> buscarHorariosDeTurnoDisponibles(Area unArea, Empleado unEmpleado, Date unaFecha) {
-        List<HorarioAtencionTurno> horariosDeAtencionNoDisponibles = areaDAO.findArea(unArea.getId()).buscarHorariosNoDisponiblesParaTurnosDeUnEmpleado(unaFecha, unEmpleado);
-        Vector<HorarioAtencionTurno> horariosDeAtencionDisponibles = new Vector<>();        
-        
-        for (HorarioAtencionTurno horarioAtencionTurnoRecorrido : horarioTurnoDAO.findHorarioAtencionTurnoEntities()) {
+        List<HorarioAtencionTurno> horariosDisponibles = turnoDAO.horarioTurnosDisponibles(unArea, unEmpleado, unaFecha);
+        Vector<HorarioAtencionTurno> horariosDeAtencionDisponibles = new Vector<>();
+
+        for (HorarioAtencionTurno horarioAtencionTurnoRecorrido : horariosDisponibles) {
             horariosDeAtencionDisponibles.add(horarioAtencionTurnoRecorrido);
-            for (HorarioAtencionTurno horariosDeAtencionNoDisponible : horariosDeAtencionNoDisponibles) {                
-                if (horariosDeAtencionNoDisponible.equals(horarioAtencionTurnoRecorrido)) {
-                    horariosDeAtencionDisponibles.remove(horarioAtencionTurnoRecorrido);  
-                }
-            }
         }
         return horariosDeAtencionDisponibles;
-        
     }
 
     public void crearNuevoTurno(Turno nuevoTurno) {

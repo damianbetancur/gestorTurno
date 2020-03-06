@@ -5,12 +5,10 @@
  */
 package dao;
 
-import java.sql.SQLException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -22,10 +20,10 @@ public class Conexion {
     private static EntityManager em;
 
     public Conexion() {
-        Conexion.conect();
+        Conexion.conectar();
     }
 
-    private static void conect() {
+    private static void conectar() {
         if (em == null) {
             Conexion.emf = Persistence.createEntityManagerFactory("com.mycompany_GestorTurno10_jar_1.0-SNAPSHOTPU");
             Conexion.em = Conexion.emf.createEntityManager();
@@ -46,6 +44,13 @@ public class Conexion {
 
     public static void setEm(EntityManager em) {
         Conexion.em = em;
+    }
+    
+    //obtener hora del servidor
+    public static Query Date_NOW(){
+        String Cons = "SELECT NOW()";
+        Query qy = em.createNativeQuery(Cons);
+        return qy;
     }
 
 }
