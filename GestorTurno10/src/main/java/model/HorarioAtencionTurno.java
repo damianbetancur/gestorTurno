@@ -23,7 +23,9 @@ public class HorarioAtencionTurno implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    private String horaTurno;
+    private String descripcion;
+    private int hora;
+    private int minuto;
 
     public HorarioAtencionTurno() {
     }
@@ -60,15 +62,32 @@ public class HorarioAtencionTurno implements Serializable {
 
     @Override
     public String toString() {
-        return getHoraTurno();
+        return getDescripcion();
     }
 
-    public String getHoraTurno() {
-        return horaTurno;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setHoraTurno(String horaTurno) {
-        this.horaTurno = horaTurno;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
+    public int getHora() {
+        return hora;
+    }
+
+    public void setHora(int hora) {
+        this.hora = hora;
+    }
+
+    public int getMinuto() {
+        return minuto;
+    }
+
+    public void setMinuto(int minuto) {
+        this.minuto = minuto;
+    }
+
+    
 }

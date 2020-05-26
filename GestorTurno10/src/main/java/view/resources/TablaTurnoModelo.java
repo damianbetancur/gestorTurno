@@ -43,7 +43,7 @@ public class TablaTurnoModelo extends AbstractTableModel {
                 retorno = rowIndex;
                 break;
             case 1:
-                retorno = turno.getUnaHoraTurno().getHoraTurno();
+                retorno = turno.getUnaHoraTurno().getDescripcion();
                 break;
             case 2:
                 retorno = turno.getUnEstadoTurno().getNombre();

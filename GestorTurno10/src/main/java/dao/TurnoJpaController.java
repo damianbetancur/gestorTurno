@@ -198,7 +198,7 @@ public class TurnoJpaController implements Serializable {
         List <Turno> turnos = new ArrayList<>();
         String consulta;
         try {
-            consulta ="SELECT t FROM Turno AS t WHERE t.unAreaB.id = ?1 and t.unEmpleado.id = ?2 and t.unEstadoTurno.id = ?3 and t.fecha = ?4 ORDER BY t.unTipoAtencion DESC";
+            consulta ="SELECT t FROM Turno AS t WHERE t.unAreaB.id = ?1 and t.unEmpleado.id = ?2 and t.unEstadoTurno.id = ?3 and t.fecha = ?4 ORDER BY t.unaHoraTurno.hora ASC, t.unTipoAtencion.prioridad, t.unaHoraTurno.minuto ";
             Query query = em.createQuery(consulta);
             query.setParameter(1, a.getId());
             query.setParameter(2, e.getId());
@@ -213,4 +213,5 @@ public class TurnoJpaController implements Serializable {
         }
         return turnos;
     }
+    
 }

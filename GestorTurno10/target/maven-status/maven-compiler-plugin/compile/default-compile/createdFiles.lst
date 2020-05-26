@@ -1,5 +1,6 @@
 view\PanelProcesarTurno01$5.class
 dao\TipoTramiteJpaController.class
+view\PanelUsuario$14.class
 model\Persona_.class
 view\PanelProcesarTurno05$2.class
 view\PanelUsuario$3.class
@@ -13,6 +14,7 @@ view\JFrameLogin$1.class
 dao\RequisitoOpcionalJpaController.class
 view\PanelUsuario.class
 view\PanelProcesarTurno03$1.class
+view\PanelUsuario$20.class
 model\Empleado_.class
 model\Area.class
 view\resources\TablaPersonaModelo.class
@@ -33,6 +35,7 @@ view\PanelEmpleado$9.class
 view\PanelOrganismo$1.class
 view\PanelPersona$3.class
 dao\EmpleadoJpaController.class
+view\PanelUsuario$12.class
 controller\OrganismoController.class
 view\ValidadorDeCampos$4.class
 view\PanelProcesarTurno06$3.class
@@ -41,9 +44,13 @@ view\PanelOrganismo.class
 view\InterfacePanel.class
 view\ValidadorDeCampos$2.class
 model\EstadoTurno_.class
+view\PanelUsuario$17.class
 view\PanelUsuario$6.class
 view\PanelProcesarTurno04$1.class
+view\resources\TablaEmpleadoUsuarioModelListener.class
+view\resources\TablaPersonaUsuarioModelListener.class
 view\JFrameBienvenida$hilo.class
+view\PanelUsuario$16.class
 view\ValidadorDeCampos$1.class
 model\Usuario.class
 view\resources\TablaTurnoModelo.class
@@ -62,15 +69,20 @@ view\PanelProcesarTurno06$4.class
 controller\ProcesarTramiteController.class
 model\TipoPersona.class
 model\Organismo.class
+view\PanelUsuario$22.class
 model\TipoPersona_.class
 view\resources\TablaEmpleadoProcesarTurnoModelListener.class
 view\PanelProcesarTurno06$5.class
 view\PanelUsuario$4.class
+view\PanelUsuario$19.class
 model\Usuario_.class
+view\PanelUsuario$23.class
+view\PanelUsuario$18.class
 view\PanelProcesarTurno05$1.class
 view\resources\TablaPersonaModelListener.class
 view\JFrameLogin$2.class
 view\resources\TablaEmpleadoModelo.class
+view\PanelUsuario$21.class
 view\PanelProcesarTurno04$4.class
 view\PanelEmpleado$3.class
 model\TipoAtencion_.class
@@ -89,6 +101,7 @@ model\HorarioAtencionTurno_.class
 controller\PersonaController.class
 controller\Main.class
 model\Turno.class
+view\PanelUsuario$15.class
 view\PanelProcesarTramite01$1.class
 view\PanelProcesarTurno02.class
 model\TipoTramite.class
@@ -99,6 +112,7 @@ view\PanelUsuario$10.class
 model\RequisitoOpcional.class
 view\PanelProcesarTurno07$2.class
 view\PanelEmpleado.class
+view\PanelUsuario$13.class
 dao\RequisitoObligatorioJpaController.class
 model\Tramite.class
 view\resources\TablaUsuarioModelo.class

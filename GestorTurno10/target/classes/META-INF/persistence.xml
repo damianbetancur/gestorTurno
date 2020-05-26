@@ -5,6 +5,7 @@
     <class>model.Area</class>
     <class>model.Empleado</class>
     <class>model.EstadoTurno</class>
+    <class>model.HorarioAtencionTurno</class>
     <class>model.Organismo</class>
     <class>model.Persona</class>
     <class>model.RequisitoObligatorio</class>
@@ -17,8 +18,6 @@
     <class>model.Tramite</class>
     <class>model.Turno</class>
     <class>model.Usuario</class>
-    <class>model.HorarioAtencionTurno</class>
-    <shared-cache-mode>DISABLE_SELECTIVE</shared-cache-mode>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/turnos01?serverTimezone=UTC"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

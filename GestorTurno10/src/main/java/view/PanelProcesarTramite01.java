@@ -465,7 +465,7 @@ public class PanelProcesarTramite01 extends javax.swing.JPanel implements Interf
             this.turnoSeleccionado = this.tablaTurnoModelo.obtenerTurnoEn(filaSeleccionada);
             
             this.jtf_fecha.setText(this.turnoSeleccionado.getFecha().toString());
-            this.jtf_hora.setText(this.turnoSeleccionado.getUnaHoraTurno().getHoraTurno());
+            this.jtf_hora.setText(this.turnoSeleccionado.getUnaHoraTurno().getDescripcion());
             this.jtf_estadoTurno.setText(this.turnoSeleccionado.getUnEstadoTurno().getNombre());
             this.jtf_area.setText(this.turnoSeleccionado.getUnAreaB().getNombre());
             this.jtf_tipoAtencion.setText(this.turnoSeleccionado.getUnTipoAtencion().getNombre());

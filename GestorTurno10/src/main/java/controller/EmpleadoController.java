@@ -102,7 +102,7 @@ public class EmpleadoController {
         return empleadosEncontrados;
     }
 
-    public List<Empleado> buscaEmpleadosPorDNI(String dni) {
+    public List<Empleado> buscarEmpleadosPorDNI(String dni) {
         List<Empleado> empleadosEncontrados = new ArrayList<>();
         for (Empleado empleadoRecorrido : empleadoDAO.findEmpleadoEntities()) {
             if (empleadoRecorrido.getDni().contains(dni)) {

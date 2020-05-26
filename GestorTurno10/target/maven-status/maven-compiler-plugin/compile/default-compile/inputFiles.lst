@@ -31,6 +31,7 @@ C:\Users\Ariel\Documents\GitHub\gestorTurno\GestorTurno10\src\main\java\dao\Esta
 C:\Users\Ariel\Documents\GitHub\gestorTurno\GestorTurno10\src\main\java\dao\TipoEmpleadoJpaController.java
 C:\Users\Ariel\Documents\GitHub\gestorTurno\GestorTurno10\src\main\java\dao\UsuarioJpaController.java
 C:\Users\Ariel\Documents\GitHub\gestorTurno\GestorTurno10\src\main\java\dao\RequisitoObligatorioJpaController.java
+C:\Users\Ariel\Documents\GitHub\gestorTurno\GestorTurno10\src\main\java\view\resources\TablaEmpleadoUsuarioModelListener.java
 C:\Users\Ariel\Documents\GitHub\gestorTurno\GestorTurno10\src\main\java\view\JFramePrincipal.java
 C:\Users\Ariel\Documents\GitHub\gestorTurno\GestorTurno10\src\main\java\view\PanelProcesarTurno02.java
 C:\Users\Ariel\Documents\GitHub\gestorTurno\GestorTurno10\src\main\java\controller\ProcesarTramiteController.java
@@ -55,6 +56,7 @@ C:\Users\Ariel\Documents\GitHub\gestorTurno\GestorTurno10\src\main\java\controll
 C:\Users\Ariel\Documents\GitHub\gestorTurno\GestorTurno10\src\main\java\model\Usuario.java
 C:\Users\Ariel\Documents\GitHub\gestorTurno\GestorTurno10\src\main\java\view\ValidadorDeCampos.java
 C:\Users\Ariel\Documents\GitHub\gestorTurno\GestorTurno10\src\main\java\dao\TurnoJpaController.java
+C:\Users\Ariel\Documents\GitHub\gestorTurno\GestorTurno10\src\main\java\view\resources\TablaPersonaUsuarioModelListener.java
 C:\Users\Ariel\Documents\GitHub\gestorTurno\GestorTurno10\src\main\java\view\resources\TablaUsuarioModelo.java
 C:\Users\Ariel\Documents\GitHub\gestorTurno\GestorTurno10\src\main\java\view\PanelProcesarTramite01.java
 C:\Users\Ariel\Documents\GitHub\gestorTurno\GestorTurno10\src\main\java\model\TipoEmpleado.java

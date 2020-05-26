@@ -37,7 +37,7 @@ public class PanelProcesarTurno07 extends javax.swing.JPanel implements Interfac
         habilitarTodosLosBotones(true);
 
         this.jtf_fecha.setText(this.controlador.getNuevoTurno().getFecha().toString());
-        this.jtf_hora.setText(this.controlador.getNuevoTurno().getUnaHoraTurno().getHoraTurno());
+        this.jtf_hora.setText(this.controlador.getNuevoTurno().getUnaHoraTurno().getDescripcion());
         this.jtf_estadoTurno.setText("EN ESPERA");
         
         

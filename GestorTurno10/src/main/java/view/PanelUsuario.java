@@ -16,7 +16,14 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import model.Empleado;
+import model.Persona;
 import model.Usuario;
+import view.resources.TablaEmpleadoUsuarioModelListener;
+import view.resources.TablaEmpleadoModelo;
+import view.resources.TablaPersonaModelListener;
+import view.resources.TablaPersonaModelo;
+import view.resources.TablaPersonaUsuarioModelListener;
 import view.resources.TablaUsuarioModelListener;
 import view.resources.TablaUsuarioModelo;
 
@@ -31,6 +38,10 @@ public class PanelUsuario extends javax.swing.JPanel implements InterfacePanel {
     //variables de tabla
     private final TablaUsuarioModelo tablaUsuarioModelo;
 
+    private final TablaPersonaModelo tablaPersonaModelo;
+
+    private final TablaEmpleadoModelo tablaEmpleadoModelo;
+
     private final UsuarioController controlador;
     private Usuario usuarioSeleccionado;
 
@@ -44,6 +55,11 @@ public class PanelUsuario extends javax.swing.JPanel implements InterfacePanel {
     public PanelUsuario() {
         //JTable vacio
         this.tablaUsuarioModelo = new TablaUsuarioModelo();
+
+        this.tablaPersonaModelo = new TablaPersonaModelo();
+
+        this.tablaEmpleadoModelo = new TablaEmpleadoModelo();
+
         this.validador = new ValidadorDeCampos();
 
         this.crud = "";
@@ -55,8 +71,6 @@ public class PanelUsuario extends javax.swing.JPanel implements InterfacePanel {
         this.validador.habilitarBoton(true, this.jbtn_listar, new Color(30, 132, 73), Color.WHITE, null, null);
         this.validador.habilitarBoton(false, this.jbtn_agregar, new Color(30, 132, 73), Color.WHITE, null, null);
 
-        habilitarTodosLosCampos(false);
-
         //iniciar el controlador de esta vista
         this.controlador = new UsuarioController();
         setSize(800, 600);
@@ -64,10 +78,16 @@ public class PanelUsuario extends javax.swing.JPanel implements InterfacePanel {
         //agrega escuchadores de las tablas
         this.jtb_usuario.getSelectionModel().addListSelectionListener(new TablaUsuarioModelListener(this));
 
+        this.jtb_empleadoAsociado.getSelectionModel().addListSelectionListener(new TablaEmpleadoUsuarioModelListener(this));
+
+        this.jtb_personaAsociada.getSelectionModel().addListSelectionListener(new TablaPersonaUsuarioModelListener(this));
+
         limpiarTodosLosCampos();
 
         this.validador.LimitarCaracteres(this.jtf_nickname, 30);
         this.validador.LimitarCaracteres(this.jtf_buscarUsuario, 30);
+
+        this.habilitarTodosLosCampos(false);
 
     }
 
@@ -139,7 +159,7 @@ public class PanelUsuario extends javax.swing.JPanel implements InterfacePanel {
         jScrollPaneTabla.setViewportView(jtb_usuario);
 
         jbtn_listar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jbtn_listar.setText("LISTAR");
+        jbtn_listar.setText("LISTAR POR NICKNAME");
         jbtn_listar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtn_listarActionPerformed(evt);
@@ -175,9 +195,9 @@ public class PanelUsuario extends javax.swing.JPanel implements InterfacePanel {
                 .addGroup(jPanel_crudLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPaneTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 910, Short.MAX_VALUE)
                     .addGroup(jPanel_crudLayout.createSequentialGroup()
-                        .addComponent(jbtn_listar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(jtf_buscarUsuario)
+                        .addComponent(jbtn_listar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jtf_buscarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 613, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jbtn_agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -195,6 +215,10 @@ public class PanelUsuario extends javax.swing.JPanel implements InterfacePanel {
                         .addComponent(jbtn_agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
+
+        jTabbedPaneContenedor.setEnabled(false);
+
+        jPanel_datos.setEnabled(false);
 
         jbtn_eliminar.setText("ELIMINAR");
         jbtn_eliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -214,6 +238,7 @@ public class PanelUsuario extends javax.swing.JPanel implements InterfacePanel {
         jLabel1.setText("NICKNAME");
 
         jtf_nickname.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jtf_nickname.setEnabled(false);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setText("PASSWORD");
@@ -250,6 +275,8 @@ public class PanelUsuario extends javax.swing.JPanel implements InterfacePanel {
         jlbl_alertaPersonaAsociada.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         jtf_personaAsociada.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jtf_personaAsociada.setEnabled(false);
+        jtf_personaAsociada.setFocusable(false);
         jtf_personaAsociada.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jtf_personaAsociadaMousePressed(evt);
@@ -260,11 +287,17 @@ public class PanelUsuario extends javax.swing.JPanel implements InterfacePanel {
         jLabel5.setText("DNI EMPLEADO ASOCIADO");
 
         jtf_empleadoAsociado.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jtf_empleadoAsociado.setEnabled(false);
+        jtf_empleadoAsociado.setFocusable(false);
         jtf_empleadoAsociado.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jtf_empleadoAsociadoMousePressed(evt);
             }
         });
+
+        jpf_confirmarPassword.setEnabled(false);
+
+        jpf_password.setEnabled(false);
 
         jlbl_alertaEmpleadoAsociado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
@@ -276,89 +309,79 @@ public class PanelUsuario extends javax.swing.JPanel implements InterfacePanel {
                 .addGap(120, 120, 120)
                 .addGroup(jPanel_datosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel_datosLayout.createSequentialGroup()
-                        .addComponent(jlbl_mensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(60, 60, 60))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_datosLayout.createSequentialGroup()
-                        .addGroup(jPanel_datosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGap(218, 218, 218)
+                        .addComponent(jbtn_aceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbtn_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbtn_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbtn_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(133, Short.MAX_VALUE))
+                    .addGroup(jPanel_datosLayout.createSequentialGroup()
+                        .addGroup(jPanel_datosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jlbl_mensaje, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel_datosLayout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jpf_password))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel_datosLayout.createSequentialGroup()
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jtf_personaAsociada))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel_datosLayout.createSequentialGroup()
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jpf_confirmarPassword))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel_datosLayout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jtf_nickname, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel_datosLayout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jbtn_aceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jbtn_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jbtn_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jbtn_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel_datosLayout.createSequentialGroup()
-                                .addGroup(jPanel_datosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel_datosLayout.createSequentialGroup()
-                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(20, 20, 20)
-                                        .addComponent(jpf_password))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel_datosLayout.createSequentialGroup()
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(20, 20, 20)
-                                        .addComponent(jpf_confirmarPassword))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel_datosLayout.createSequentialGroup()
-                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(20, 20, 20)
-                                        .addComponent(jtf_nickname, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel_datosLayout.createSequentialGroup()
-                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(20, 20, 20)
-                                        .addComponent(jtf_personaAsociada))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel_datosLayout.createSequentialGroup()
-                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(20, 20, 20)
-                                        .addComponent(jtf_empleadoAsociado)))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel_datosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jlbl_alertaNickName, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jlbl_alertaPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jlbl_alertaConfirmarPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jlbl_alertaPersonaAsociada, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jlbl_alertaEmpleadoAsociado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(127, 127, 127))))
+                                .addComponent(jtf_empleadoAsociado)))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel_datosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jlbl_alertaPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jlbl_alertaConfirmarPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jlbl_alertaPersonaAsociada, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jlbl_alertaEmpleadoAsociado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jlbl_alertaNickName, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel_datosLayout.setVerticalGroup(
             jPanel_datosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_datosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel_datosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtf_nickname, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlbl_alertaNickName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
                 .addGroup(jPanel_datosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel_datosLayout.createSequentialGroup()
-                        .addGroup(jPanel_datosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtf_nickname, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(10, 10, 10)
-                        .addGroup(jPanel_datosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jpf_password, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(10, 10, 10)
-                        .addGroup(jPanel_datosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jpf_confirmarPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(10, 10, 10)
-                        .addGroup(jPanel_datosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtf_personaAsociada, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(10, 10, 10)
-                        .addGroup(jPanel_datosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtf_empleadoAsociado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel_datosLayout.createSequentialGroup()
-                        .addComponent(jlbl_alertaNickName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jlbl_alertaPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(jlbl_alertaConfirmarPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(jlbl_alertaPersonaAsociada, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(jlbl_alertaEmpleadoAsociado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(30, 30, 30)
+                    .addGroup(jPanel_datosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jpf_password, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jlbl_alertaPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(8, 8, 8)
+                .addGroup(jPanel_datosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jpf_confirmarPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlbl_alertaConfirmarPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addGroup(jPanel_datosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtf_personaAsociada, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlbl_alertaPersonaAsociada, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addGroup(jPanel_datosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jlbl_alertaEmpleadoAsociado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtf_empleadoAsociado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
                 .addComponent(jlbl_mensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel_datosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbtn_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbtn_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -369,30 +392,58 @@ public class PanelUsuario extends javax.swing.JPanel implements InterfacePanel {
 
         jTabbedPaneContenedor.addTab("Datos de Usuario", jPanel_datos);
 
-        jtb_personaAsociada.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
+        jPanelPersonaAsociada.setEnabled(false);
+
+        jtb_personaAsociada.setModel(tablaPersonaModelo);
         jScrollPanePersonaAsociada.setViewportView(jtb_personaAsociada);
 
         jbtn_listarPersona.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jbtn_listarPersona.setText("LISTAR");
+        jbtn_listarPersona.setEnabled(false);
+        jbtn_listarPersona.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtn_listarPersonaActionPerformed(evt);
+            }
+        });
 
         jbtn_asignarPersona.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jbtn_asignarPersona.setText("ASIGNAR");
+        jbtn_asignarPersona.setEnabled(false);
+        jbtn_asignarPersona.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtn_asignarPersonaActionPerformed(evt);
+            }
+        });
 
         jbtn_volverADatosDeUsuarioPersona.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jbtn_volverADatosDeUsuarioPersona.setText("VOLVER A DATOS DE USUARIO");
+        jbtn_volverADatosDeUsuarioPersona.setEnabled(false);
+        jbtn_volverADatosDeUsuarioPersona.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtn_volverADatosDeUsuarioPersonaActionPerformed(evt);
+            }
+        });
 
         jbtn_desasignarPersona.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jbtn_desasignarPersona.setText("DESASIGNAR");
+        jbtn_desasignarPersona.setEnabled(false);
+        jbtn_desasignarPersona.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtn_desasignarPersonaActionPerformed(evt);
+            }
+        });
+
+        jtf_buscarPersona.setEnabled(false);
+        jtf_buscarPersona.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtf_buscarPersonaFocusGained(evt);
+            }
+        });
+        jtf_buscarPersona.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtf_buscarPersonaKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelPersonaAsociadaLayout = new javax.swing.GroupLayout(jPanelPersonaAsociada);
         jPanelPersonaAsociada.setLayout(jPanelPersonaAsociadaLayout);
@@ -401,7 +452,6 @@ public class PanelUsuario extends javax.swing.JPanel implements InterfacePanel {
             .addGroup(jPanelPersonaAsociadaLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addGroup(jPanelPersonaAsociadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPanePersonaAsociada, javax.swing.GroupLayout.PREFERRED_SIZE, 690, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanelPersonaAsociadaLayout.createSequentialGroup()
                         .addComponent(jbtn_listarPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
@@ -410,7 +460,13 @@ public class PanelUsuario extends javax.swing.JPanel implements InterfacePanel {
                         .addComponent(jbtn_asignarPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
                         .addComponent(jbtn_desasignarPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jbtn_volverADatosDeUsuarioPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 690, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPersonaAsociadaLayout.createSequentialGroup()
+                        .addComponent(jScrollPanePersonaAsociada, javax.swing.GroupLayout.DEFAULT_SIZE, 905, Short.MAX_VALUE)
+                        .addContainerGap())))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPersonaAsociadaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jbtn_volverADatosDeUsuarioPersona, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanelPersonaAsociadaLayout.setVerticalGroup(
             jPanelPersonaAsociadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -423,36 +479,65 @@ public class PanelUsuario extends javax.swing.JPanel implements InterfacePanel {
                     .addComponent(jtf_buscarPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbtn_asignarPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbtn_desasignarPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(40, 40, 40)
-                .addComponent(jbtn_volverADatosDeUsuarioPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addComponent(jbtn_volverADatosDeUsuarioPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jTabbedPaneContenedor.addTab("Persona Asociada", jPanelPersonaAsociada);
 
-        jtb_empleadoAsociado.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
+        jPanelEmpleadoAsociado.setEnabled(false);
+
+        jtb_empleadoAsociado.setModel(tablaEmpleadoModelo);
         jScrollPaneEmpleadoAsociado.setViewportView(jtb_empleadoAsociado);
 
         jbtn_listarEmpleado.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jbtn_listarEmpleado.setText("LISTAR");
+        jbtn_listarEmpleado.setEnabled(false);
+        jbtn_listarEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtn_listarEmpleadoActionPerformed(evt);
+            }
+        });
+
+        jtf_buscarEmpleado.setEnabled(false);
+        jtf_buscarEmpleado.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtf_buscarEmpleadoFocusGained(evt);
+            }
+        });
+        jtf_buscarEmpleado.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtf_buscarEmpleadoKeyReleased(evt);
+            }
+        });
 
         jbtn_asignarEmpleado.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jbtn_asignarEmpleado.setText("ASIGNAR");
+        jbtn_asignarEmpleado.setEnabled(false);
+        jbtn_asignarEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtn_asignarEmpleadoActionPerformed(evt);
+            }
+        });
 
         jbtn_desasignarEmpleado.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jbtn_desasignarEmpleado.setText("DESASIGNAR");
+        jbtn_desasignarEmpleado.setEnabled(false);
+        jbtn_desasignarEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtn_desasignarEmpleadoActionPerformed(evt);
+            }
+        });
 
         jbtn_volverADatosDeUsuarioEmpleado.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jbtn_volverADatosDeUsuarioEmpleado.setText("VOLVER A DATOS DE USUARIO");
+        jbtn_volverADatosDeUsuarioEmpleado.setEnabled(false);
+        jbtn_volverADatosDeUsuarioEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtn_volverADatosDeUsuarioEmpleadoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelEmpleadoAsociadoLayout = new javax.swing.GroupLayout(jPanelEmpleadoAsociado);
         jPanelEmpleadoAsociado.setLayout(jPanelEmpleadoAsociadoLayout);
@@ -461,7 +546,6 @@ public class PanelUsuario extends javax.swing.JPanel implements InterfacePanel {
             .addGroup(jPanelEmpleadoAsociadoLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addGroup(jPanelEmpleadoAsociadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPaneEmpleadoAsociado, javax.swing.GroupLayout.PREFERRED_SIZE, 690, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanelEmpleadoAsociadoLayout.createSequentialGroup()
                         .addComponent(jbtn_listarEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
@@ -470,7 +554,11 @@ public class PanelUsuario extends javax.swing.JPanel implements InterfacePanel {
                         .addComponent(jbtn_asignarEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
                         .addComponent(jbtn_desasignarEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jbtn_volverADatosDeUsuarioEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 690, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelEmpleadoAsociadoLayout.createSequentialGroup()
+                        .addGroup(jPanelEmpleadoAsociadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jbtn_volverADatosDeUsuarioEmpleado, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPaneEmpleadoAsociado, javax.swing.GroupLayout.DEFAULT_SIZE, 905, Short.MAX_VALUE))
+                        .addContainerGap())))
         );
         jPanelEmpleadoAsociadoLayout.setVerticalGroup(
             jPanelEmpleadoAsociadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -483,8 +571,9 @@ public class PanelUsuario extends javax.swing.JPanel implements InterfacePanel {
                     .addComponent(jtf_buscarEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbtn_asignarEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbtn_desasignarEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(40, 40, 40)
-                .addComponent(jbtn_volverADatosDeUsuarioEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addComponent(jbtn_volverADatosDeUsuarioEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jTabbedPaneContenedor.addTab("Empleado Asociado", jPanelEmpleadoAsociado);
@@ -508,7 +597,7 @@ public class PanelUsuario extends javax.swing.JPanel implements InterfacePanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel_crud, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jTabbedPaneContenedor))
+                    .addComponent(jTabbedPaneContenedor, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -573,6 +662,7 @@ public class PanelUsuario extends javax.swing.JPanel implements InterfacePanel {
         this.jlbl_alertaEmpleadoAsociado.setIcon(null);
 
         this.jlbl_mensaje.setText("");
+        this.crud = "buscar";
     }//GEN-LAST:event_jbtn_cancelarActionPerformed
 
     /**
@@ -591,6 +681,10 @@ public class PanelUsuario extends javax.swing.JPanel implements InterfacePanel {
         this.validador.habilitarCampo(false, this.jtf_buscarUsuario);
 
         this.jtb_usuario.setEnabled(false);
+
+        this.jTabbedPaneContenedor.setSelectedIndex(0);
+        this.jbtn_volverADatosDeUsuarioPersona.setEnabled(false);
+        this.jbtn_volverADatosDeUsuarioPersona.setEnabled(false);
 
 
     }//GEN-LAST:event_jbtn_modificarActionPerformed
@@ -676,40 +770,15 @@ public class PanelUsuario extends javax.swing.JPanel implements InterfacePanel {
         if (crud.equals("eliminar")) {
             opcion = JOptionPane.showConfirmDialog(null, "Realmente desea eliminar la persona", "Confirmar Eliminación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (opcion == 0) {
-
                 try {
-                    controlador.eliminarUsuario(usuarioSeleccionado);
+                    eliminar();
                     opcion = JOptionPane.showConfirmDialog(null, "La eliminación se realizo con exito", "Persona Eliminada", JOptionPane.CLOSED_OPTION, JOptionPane.QUESTION_MESSAGE);
-                    //Actualizar el TableModel con la lista del controlador
-                    this.tablaUsuarioModelo.setUsuarios(this.controlador.buscarTodosLosUsuarios());
-
-                    //Refrescar el modelo en la tabla
-                    this.tablaUsuarioModelo.fireTableDataChanged();
-
-                    limpiarTodosLosCampos();
-                    habilitarTodosLosCampos(false);
-                    habilitarTodosLosBotones(false);
-
-                    this.validador.habilitarBoton(true, this.jbtn_agregar, new Color(30, 132, 73), Color.WHITE, null, null);
-                    this.validador.habilitarBoton(true, this.jbtn_listar, new Color(30, 132, 73), Color.WHITE, null, null);
-                    this.validador.habilitarCampo(true, this.jtf_buscarUsuario);
-
-                    this.usuarioSeleccionado = null;
-
-                    this.jtb_usuario.setEnabled(true);
-
-                    this.jlbl_alertaNickName.setIcon(null);
-                    this.jlbl_alertaPassword.setIcon(null);
-                    this.jlbl_alertaConfirmarPassword.setIcon(null);
-                    this.jlbl_alertaPersonaAsociada.setIcon(null);
-                    this.jlbl_alertaEmpleadoAsociado.setIcon(null);
-
-                    this.jlbl_mensaje.setText("");
-
                 } catch (NonexistentEntityException ex) {
                     Logger.getLogger(PanelUsuario.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(PanelUsuario.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
+                this.crud = "buscar";
             } else {
                 //Actualizar el TableModel con la lista del controlador
                 this.tablaUsuarioModelo.setUsuarios(this.controlador.buscarTodosLosUsuarios());
@@ -764,6 +833,14 @@ public class PanelUsuario extends javax.swing.JPanel implements InterfacePanel {
 
         this.usuarioSeleccionado = null;
 
+        this.jTabbedPaneContenedor.setSelectedIndex(0);
+        this.jbtn_volverADatosDeUsuarioPersona.setEnabled(false);
+        this.jbtn_volverADatosDeUsuarioPersona.setEnabled(false);
+
+        this.jtb_usuario.setEnabled(true);
+
+        this.crud = "buscar";
+
     }//GEN-LAST:event_jbtn_listarActionPerformed
 
     /**
@@ -772,7 +849,23 @@ public class PanelUsuario extends javax.swing.JPanel implements InterfacePanel {
      * @param evt
      */
     private void jbtn_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_agregarActionPerformed
+        this.usuarioSeleccionado = new Usuario();
+        Persona nuevaPersonAsociada = new Persona();
+        Empleado nuevoEmpleadoAsociado = new Empleado();
+        usuarioSeleccionado.setUnaPersona(nuevaPersonAsociada);
+        usuarioSeleccionado.setUnEmpleado(nuevoEmpleadoAsociado);
+
         this.crud = "agregar";
+        habilitarTodosLosBotones(false);
+        habilitarTodosLosCampos(true);
+        jtf_nickname.setEnabled(true);
+        jtf_nickname.requestFocus();
+
+        jbtn_listarPersona.setEnabled(true);
+        jtf_buscarPersona.setEnabled(true);
+
+        jtf_buscarEmpleado.setEnabled(true);
+
         this.validador.limpiarCampo(this.jtf_nickname);
         this.validador.limpiarCampo(this.jtf_empleadoAsociado);
         this.validador.limpiarCampo(this.jtf_personaAsociada);
@@ -780,8 +873,6 @@ public class PanelUsuario extends javax.swing.JPanel implements InterfacePanel {
         this.jpf_password.setText("");
         this.jpf_confirmarPassword.setText("");
 
-        habilitarTodosLosBotones(false);
-        habilitarTodosLosCampos(true);
         this.jtf_empleadoAsociado.setEnabled(false);
         this.jtf_personaAsociada.setEnabled(false);
         this.validador.habilitarBoton(false, this.jbtn_listar, new Color(30, 132, 73), Color.WHITE, null, null);
@@ -790,7 +881,15 @@ public class PanelUsuario extends javax.swing.JPanel implements InterfacePanel {
         this.validador.habilitarBoton(false, this.jbtn_agregar, new Color(30, 132, 73), Color.WHITE, null, null);
         this.validador.habilitarCampo(false, this.jtf_buscarUsuario);
 
+        this.validador.habilitarBoton(true, this.jbtn_listarEmpleado, new Color(30, 132, 73), Color.WHITE, null, null);
+        this.validador.habilitarBoton(true, this.jbtn_listarPersona, new Color(30, 132, 73), Color.WHITE, null, null);
+
         this.jtb_usuario.setEnabled(false);
+
+        this.jTabbedPaneContenedor.setSelectedIndex(0);
+        this.jbtn_volverADatosDeUsuarioPersona.setEnabled(false);
+        this.jbtn_volverADatosDeUsuarioPersona.setEnabled(false);
+
 
     }//GEN-LAST:event_jbtn_agregarActionPerformed
 
@@ -823,14 +922,12 @@ public class PanelUsuario extends javax.swing.JPanel implements InterfacePanel {
             this.jlbl_alertaConfirmarPassword.setIcon(null);
             this.jlbl_alertaPersonaAsociada.setIcon(null);
             this.jlbl_alertaEmpleadoAsociado.setIcon(null);
+            this.jTabbedPaneContenedor.setSelectedIndex(0);
 
-            this.jlbl_mensaje.setText("");
         }
     }//GEN-LAST:event_jtf_buscarUsuarioFocusGained
 
     /**
-     * Escucha si en el JTextFiel buscar persona se presionan teclas
-     *
      * @param evt
      */
     private void jtf_buscarUsuarioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_buscarUsuarioKeyReleased
@@ -862,16 +959,257 @@ public class PanelUsuario extends javax.swing.JPanel implements InterfacePanel {
     }//GEN-LAST:event_jbtn_eliminarActionPerformed
 
     private void jtf_personaAsociadaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtf_personaAsociadaMousePressed
-        System.out.println("hola");
+        if (this.usuarioSeleccionado != null) {
+            if (this.usuarioSeleccionado.getUnaPersona() != null) {
+                this.jTabbedPaneContenedor.setSelectedIndex(1);
+                this.validador.habilitarBoton(true, this.jbtn_volverADatosDeUsuarioPersona, new Color(255, 255, 0), Color.BLACK, null, null);
 
-        this.jTabbedPaneContenedor.setSelectedIndex(1);
+                //Actualizar el TableModel con la lista del controlador
+                this.tablaPersonaModelo.setPersonas(null);
+
+                //Refrescar el modelo en la tabla
+                this.tablaPersonaModelo.fireTableDataChanged();
+
+                if (this.crud.equals("agregar")) {
+                    this.jtf_buscarPersona.setText("");
+                    this.jtf_buscarPersona.setEnabled(false);
+                    this.jtb_personaAsociada.setEnabled(true);
+                    ///asdsdasdasd
+                    if (this.usuarioSeleccionado.getUnaPersona().getId() != null) {
+                        this.tablaPersonaModelo.setPersonas(this.controlador.buscarTodasLasPersonas());
+                        //Refrescar el modelo en la tabla
+                        this.tablaPersonaModelo.fireTableDataChanged();
+                        this.jtb_personaAsociada.changeSelection(this.tablaPersonaModelo.buscarFilaPersona(this.usuarioSeleccionado.getUnaPersona()) - 1, 1, false, false);
+
+                        this.validador.habilitarBoton(true, this.jbtn_desasignarPersona, Color.RED, Color.WHITE, null, null);
+                    } else {
+                        this.jtf_buscarPersona.setText("");
+                        this.jtf_buscarPersona.setEnabled(false);
+                        this.jtb_personaAsociada.setEnabled(true);
+                    }
+
+                }
+                if (this.crud.equals("buscar")) {
+                    this.tablaPersonaModelo.setPersonas(this.controlador.buscarTodasLasPersonas());
+                    this.jtb_personaAsociada.setEnabled(false);
+                    //Refrescar el modelo en la tabla
+                    this.tablaPersonaModelo.fireTableDataChanged();
+                    this.jtb_personaAsociada.changeSelection(this.tablaPersonaModelo.buscarFilaPersona(this.usuarioSeleccionado.getUnaPersona()) - 1, 1, false, false);
+                    this.validador.habilitarBoton(false, this.jbtn_asignarEmpleado, new Color(30, 132, 73), Color.WHITE, null, null);
+                    this.validador.habilitarBoton(false, this.jbtn_desasignarEmpleado, new Color(30, 132, 73), Color.WHITE, null, null);
+                }
+            }
+        }
+
+
     }//GEN-LAST:event_jtf_personaAsociadaMousePressed
 
     private void jtf_empleadoAsociadoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtf_empleadoAsociadoMousePressed
-        System.out.println("hola");
+        if (this.usuarioSeleccionado != null) {
+            if (this.usuarioSeleccionado.getUnEmpleado() != null) {
+                this.jTabbedPaneContenedor.setSelectedIndex(2);
+                this.validador.habilitarBoton(true, this.jbtn_volverADatosDeUsuarioEmpleado, new Color(255, 255, 0), Color.BLACK, null, null);
 
-        this.jTabbedPaneContenedor.setSelectedIndex(2);
+                //Actualizar el TableModel con la lista del controlador
+                this.tablaEmpleadoModelo.setEmpleados(null);
+
+                //Refrescar el modelo en la tabla
+                this.tablaEmpleadoModelo.fireTableDataChanged();
+
+                if (this.crud.equals("agregar")) {
+                    if (this.usuarioSeleccionado.getUnEmpleado().getId() != null) {
+                        this.tablaEmpleadoModelo.setEmpleados(this.controlador.buscarTodosLosEmpleados());
+                        //Refrescar el modelo en la tabla
+                        this.tablaEmpleadoModelo.fireTableDataChanged();
+                        this.jtb_empleadoAsociado.changeSelection(this.tablaEmpleadoModelo.buscarFilaEmpleado(this.usuarioSeleccionado.getUnEmpleado()) - 1, 1, false, false);
+
+                        this.validador.habilitarBoton(true, this.jbtn_desasignarEmpleado, Color.RED, Color.WHITE, null, null);
+                    } else {
+                        this.jtf_buscarEmpleado.setText("");
+                        this.jtf_buscarEmpleado.setEnabled(false);
+                        this.jtb_empleadoAsociado.setEnabled(true);
+                    }
+
+                }
+                if (this.crud.equals("buscar")) {
+                    this.tablaEmpleadoModelo.setEmpleados(this.controlador.buscarTodosLosEmpleados());
+                    this.jtb_empleadoAsociado.setEnabled(false);
+                    //Refrescar el modelo en la tabla
+                    this.tablaEmpleadoModelo.fireTableDataChanged();
+                    this.jtb_empleadoAsociado.changeSelection(this.tablaEmpleadoModelo.buscarFilaEmpleado(this.usuarioSeleccionado.getUnEmpleado()) - 1, 1, false, false);
+                    this.validador.habilitarBoton(false, this.jbtn_asignarEmpleado, new Color(30, 132, 73), Color.WHITE, null, null);
+                    this.validador.habilitarBoton(false, this.jbtn_desasignarEmpleado, new Color(30, 132, 73), Color.WHITE, null, null);
+                }
+            }
+        }
     }//GEN-LAST:event_jtf_empleadoAsociadoMousePressed
+
+    private void jbtn_volverADatosDeUsuarioPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_volverADatosDeUsuarioPersonaActionPerformed
+        this.jTabbedPaneContenedor.setSelectedIndex(0);
+        this.validador.habilitarBoton(false, this.jbtn_volverADatosDeUsuarioPersona, new Color(30, 132, 73), Color.WHITE, null, null);
+
+    }//GEN-LAST:event_jbtn_volverADatosDeUsuarioPersonaActionPerformed
+
+    private void jbtn_volverADatosDeUsuarioEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_volverADatosDeUsuarioEmpleadoActionPerformed
+
+        if (this.crud.equals("agregar")) {
+            this.jTabbedPaneContenedor.setSelectedIndex(0);
+            this.validador.habilitarBoton(false, this.jbtn_volverADatosDeUsuarioEmpleado, new Color(30, 132, 73), Color.WHITE, null, null);
+        }
+
+        if (this.crud.equals("buscar")) {
+            this.jTabbedPaneContenedor.setSelectedIndex(0);
+        }
+
+    }//GEN-LAST:event_jbtn_volverADatosDeUsuarioEmpleadoActionPerformed
+
+    private void jbtn_listarPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_listarPersonaActionPerformed
+        //Actualizar el TableModel con la lista del controlador
+        this.tablaPersonaModelo.setPersonas(this.controlador.buscarTodasLasPersonas());
+
+        //Refrescar el modelo en la tabla
+        this.tablaPersonaModelo.fireTableDataChanged();
+
+        this.validador.habilitarCampo(true, this.jtf_buscarPersona);
+
+        if (this.crud.equals("agregar")) {
+            this.jtf_buscarPersona.setText("");
+            this.jtf_buscarPersona.setEnabled(true);
+        }
+    }//GEN-LAST:event_jbtn_listarPersonaActionPerformed
+
+    private void jbtn_listarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_listarEmpleadoActionPerformed
+        //Actualizar el TableModel con la lista del controlador
+        this.tablaEmpleadoModelo.setEmpleados(this.controlador.buscarTodosLosEmpleados());
+
+        //Refrescar el modelo en la tabla
+        this.tablaEmpleadoModelo.fireTableDataChanged();
+
+        this.validador.habilitarCampo(true, this.jtf_buscarEmpleado);
+
+        if (this.crud.equals("agregar")) {
+            this.jtf_buscarEmpleado.setText("");
+            this.jtf_buscarEmpleado.setEnabled(true);
+        }
+    }//GEN-LAST:event_jbtn_listarEmpleadoActionPerformed
+
+    private void jtf_buscarEmpleadoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_buscarEmpleadoKeyReleased
+        if (this.jtf_buscarEmpleado.isEditable()) {
+            //Actualizar el TableModel con la lista del controlador
+            this.tablaEmpleadoModelo.setEmpleados(this.controlador.buscarEmpleadoDeUsuarioPorDNI(this.jtf_buscarEmpleado.getText()));
+
+            //Refrescar el modelo en la tabla
+            this.tablaEmpleadoModelo.fireTableDataChanged();
+        }
+    }//GEN-LAST:event_jtf_buscarEmpleadoKeyReleased
+
+    private void jtf_buscarEmpleadoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_buscarEmpleadoFocusGained
+        if (this.jtf_buscarEmpleado.isEditable()) {
+            this.tablaEmpleadoModelo.setEmpleados(this.controlador.buscarTodosLosEmpleados());
+            this.jtf_buscarEmpleado.setText("");
+            //Refrescar el modelo en la tabla
+            this.tablaEmpleadoModelo.fireTableDataChanged();
+
+        }
+    }//GEN-LAST:event_jtf_buscarEmpleadoFocusGained
+
+    private void jbtn_asignarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_asignarEmpleadoActionPerformed
+
+        if (this.crud.equals("agregar")) {
+            int opcion = 0;
+            opcion = JOptionPane.showConfirmDialog(this, "Realmente Asociar al Empleado", "Confirmar Asociación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (opcion == 0) {
+                this.jTabbedPaneContenedor.setSelectedIndex(0);
+                this.validador.habilitarBoton(false, this.jbtn_volverADatosDeUsuarioEmpleado, new Color(30, 132, 73), Color.WHITE, null, null);
+
+                int filaSeleccionada = this.jtb_empleadoAsociado.getSelectedRow();
+                this.usuarioSeleccionado.setUnEmpleado(this.tablaEmpleadoModelo.obtenerEmpleadoEn(filaSeleccionada));
+                this.jtf_empleadoAsociado.setText(this.usuarioSeleccionado.getUnEmpleado().getDni());
+
+            } else {
+                //Actualizar el TableModel con la lista del controlador
+                this.tablaEmpleadoModelo.setEmpleados(this.controlador.buscarTodosLosEmpleados());
+                //Refrescar el modelo en la tabla
+                this.tablaEmpleadoModelo.fireTableDataChanged();
+                this.validador.habilitarCampo(true, this.jtf_buscarEmpleado);
+                this.jtf_buscarEmpleado.setText("");
+                this.jtf_buscarEmpleado.setEnabled(true);
+            }
+        }
+
+    }//GEN-LAST:event_jbtn_asignarEmpleadoActionPerformed
+
+    private void jbtn_desasignarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_desasignarEmpleadoActionPerformed
+        if (this.crud.equals("agregar")) {
+            int opcion = 0;
+            opcion = JOptionPane.showConfirmDialog(this, "Realmente Desasociar al Empleado", "Confirmar Desasociación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (opcion == 0) {
+                this.jTabbedPaneContenedor.setSelectedIndex(0);
+                this.validador.habilitarBoton(false, this.jbtn_volverADatosDeUsuarioEmpleado, new Color(30, 132, 73), Color.WHITE, null, null);
+                this.usuarioSeleccionado.setUnEmpleado(new Empleado());
+                this.jtf_empleadoAsociado.setText("");
+
+            }
+        }
+    }//GEN-LAST:event_jbtn_desasignarEmpleadoActionPerformed
+
+    private void jtf_buscarPersonaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_buscarPersonaKeyReleased
+        if (this.jtf_buscarPersona.isEditable()) {
+            //Actualizar el TableModel con la lista del controlador
+            this.tablaPersonaModelo.setPersonas(this.controlador.buscarPersonaDeUsuarioPorDNI(this.jtf_buscarPersona.getText()));
+
+            //Refrescar el modelo en la tabla
+            this.tablaPersonaModelo.fireTableDataChanged();
+        }
+    }//GEN-LAST:event_jtf_buscarPersonaKeyReleased
+
+    private void jtf_buscarPersonaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_buscarPersonaFocusGained
+        if (this.jtf_buscarPersona.isEditable()) {
+            this.tablaPersonaModelo.setPersonas(this.controlador.buscarTodasLasPersonas());
+            this.jtf_buscarPersona.setText("");
+            //Refrescar el modelo en la tabla
+            this.tablaPersonaModelo.fireTableDataChanged();
+
+        }
+    }//GEN-LAST:event_jtf_buscarPersonaFocusGained
+
+    private void jbtn_asignarPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_asignarPersonaActionPerformed
+        if (this.crud.equals("agregar")) {
+            int opcion = 0;
+            opcion = JOptionPane.showConfirmDialog(this, "Realmente Asociar a la Persona", "Confirmar Asociación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (opcion == 0) {
+                this.jTabbedPaneContenedor.setSelectedIndex(0);
+                this.validador.habilitarBoton(false, this.jbtn_volverADatosDeUsuarioPersona, new Color(30, 132, 73), Color.WHITE, null, null);
+
+                int filaSeleccionada = this.jtb_personaAsociada.getSelectedRow();
+                this.usuarioSeleccionado.setUnaPersona(this.tablaPersonaModelo.obtenerPersonaEn(filaSeleccionada));
+                this.jtf_personaAsociada.setText(this.usuarioSeleccionado.getUnaPersona().getDni());
+
+            } else {
+                //Actualizar el TableModel con la lista del controlador
+                this.tablaPersonaModelo.setPersonas(this.controlador.buscarTodasLasPersonas());
+                //Refrescar el modelo en la tabla
+                this.tablaPersonaModelo.fireTableDataChanged();
+                this.validador.habilitarCampo(true, this.jtf_buscarPersona);
+                this.jtf_buscarPersona.setText("");
+                this.jtf_buscarPersona.setEnabled(true);
+            }
+        }
+    }//GEN-LAST:event_jbtn_asignarPersonaActionPerformed
+
+    private void jbtn_desasignarPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_desasignarPersonaActionPerformed
+        if (this.crud.equals("agregar")) {
+            int opcion = 0;
+            opcion = JOptionPane.showConfirmDialog(this, "Realmente Desasociar a la Persona", "Confirmar Desasociación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (opcion == 0) {
+                this.jTabbedPaneContenedor.setSelectedIndex(0);
+                this.validador.habilitarBoton(false, this.jbtn_volverADatosDeUsuarioEmpleado, new Color(30, 132, 73), Color.WHITE, null, null);
+                this.usuarioSeleccionado.setUnaPersona(new Persona());
+                this.jtf_personaAsociada.setText("");
+
+            }
+        }
+    }//GEN-LAST:event_jbtn_desasignarPersonaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -927,12 +1265,17 @@ public class PanelUsuario extends javax.swing.JPanel implements InterfacePanel {
     //--------------------------------------------------------------------------
     @Override
     public void habilitarTodosLosCampos(boolean estado) {
+
         this.validador.habilitarCampo(estado, this.jtf_nickname);
         this.validador.habilitarCampo(estado, this.jtf_empleadoAsociado);
         this.validador.habilitarCampo(estado, this.jtf_personaAsociada);
         this.validador.habilitarCampo(estado, this.jtf_buscarUsuario);
         this.jpf_password.setEnabled(estado);
         this.jpf_confirmarPassword.setEnabled(estado);
+
+        this.validador.habilitarCampo(estado, this.jtf_buscarEmpleado);
+        this.validador.habilitarCampo(estado, this.jtf_buscarPersona);
+
     }
 
     @Override
@@ -943,6 +1286,9 @@ public class PanelUsuario extends javax.swing.JPanel implements InterfacePanel {
         this.validador.limpiarCampo(this.jtf_buscarUsuario);
         this.jpf_password.setText("");
         this.jpf_confirmarPassword.setText("");
+
+        this.validador.limpiarCampo(this.jtf_buscarEmpleado);
+        this.validador.limpiarCampo(this.jtf_buscarPersona);
     }
 
     @Override
@@ -953,6 +1299,13 @@ public class PanelUsuario extends javax.swing.JPanel implements InterfacePanel {
         this.validador.habilitarBoton(estado, this.jbtn_agregar, new Color(30, 132, 73), Color.WHITE, null, null);
         this.validador.habilitarBoton(estado, this.jbtn_eliminar, new Color(30, 132, 73), Color.WHITE, null, null);
         this.validador.habilitarBoton(estado, this.jbtn_modificar, new Color(30, 132, 73), Color.WHITE, null, null);
+
+        this.validador.habilitarBoton(estado, this.jbtn_volverADatosDeUsuarioPersona, new Color(30, 132, 73), Color.WHITE, null, null);
+        this.validador.habilitarBoton(estado, this.jbtn_volverADatosDeUsuarioEmpleado, new Color(30, 132, 73), Color.WHITE, null, null);
+
+        this.validador.habilitarBoton(estado, this.jbtn_listarEmpleado, new Color(30, 132, 73), Color.WHITE, null, null);
+        this.validador.habilitarBoton(estado, this.jbtn_listarPersona, new Color(30, 132, 73), Color.WHITE, null, null);
+
     }
 
     //--------------------------------------------------------------------------
@@ -1010,6 +1363,8 @@ public class PanelUsuario extends javax.swing.JPanel implements InterfacePanel {
         int filaSeleccionada = this.jtb_usuario.getSelectedRow();
         // si la fila esta seleccionada, seteamos la persona auxiliar, llamando al modelo de tabla
         if (filaSeleccionada >= 0) {
+
+            this.jTabbedPaneContenedor.setSelectedIndex(0);
             this.usuarioSeleccionado = this.tablaUsuarioModelo.obtenerUsuarioEn(filaSeleccionada);
             this.jtf_nickname.setText(this.usuarioSeleccionado.getNombre());
 
@@ -1029,6 +1384,40 @@ public class PanelUsuario extends javax.swing.JPanel implements InterfacePanel {
             this.validador.habilitarBoton(false, this.jbtn_aceptar, new Color(30, 132, 73), Color.WHITE, null, null);
             this.validador.habilitarBoton(true, this.jbtn_eliminar, new Color(30, 132, 73), Color.WHITE, null, null);
             this.validador.habilitarBoton(true, this.jbtn_modificar, new Color(30, 132, 73), Color.WHITE, null, null);
+        }
+    }
+
+    /**
+     * Selecciona una fila de la tabla, devolviendo un objeto Empleado
+     */
+    public void seleccionarEmpleado() {
+        //obtiene el indice de la fila seleccionada en la tabla de empleados
+        int filaSeleccionada = this.jtb_empleadoAsociado.getSelectedRow();
+        // si la fila esta seleccionada, seteamos la persona auxiliar, llamando al modelo de tabla        
+        if (filaSeleccionada >= 0) {
+            if (this.crud.equals("agregar")) {
+                this.validador.habilitarBoton(true, this.jbtn_asignarEmpleado, new Color(30, 132, 73), Color.WHITE, null, null);
+            }
+        } else {
+            this.validador.habilitarBoton(false, this.jbtn_asignarEmpleado, new Color(30, 132, 73), Color.WHITE, null, null);
+            this.validador.habilitarBoton(false, this.jbtn_desasignarEmpleado, new Color(30, 132, 73), Color.WHITE, null, null);
+        }
+    }
+
+    /**
+     * Selecciona una fila de la tabla, devolviendo un objeto Persona
+     */
+    public void seleccionarPersona() {
+        //obtiene el indice de la fila seleccionada en la tabla de empleados
+        int filaSeleccionada = this.jtb_personaAsociada.getSelectedRow();
+        // si la fila esta seleccionada, seteamos la persona auxiliar, llamando al modelo de tabla        
+        if (filaSeleccionada >= 0) {
+            if (this.crud.equals("agregar")) {
+                this.validador.habilitarBoton(true, this.jbtn_asignarPersona, new Color(30, 132, 73), Color.WHITE, null, null);
+            }
+        } else {
+            this.validador.habilitarBoton(false, this.jbtn_asignarPersona, new Color(30, 132, 73), Color.WHITE, null, null);
+            this.validador.habilitarBoton(false, this.jbtn_desasignarPersona, new Color(30, 132, 73), Color.WHITE, null, null);
         }
     }
 
@@ -1057,6 +1446,9 @@ public class PanelUsuario extends javax.swing.JPanel implements InterfacePanel {
             this.jlbl_alertaPersonaAsociada.setIcon(null);
             this.jlbl_alertaEmpleadoAsociado.setIcon(null);
             this.jlbl_mensaje.setText("");
+
+            this.usuarioSeleccionado.setNombre(nuevoUsuario.getNombre());
+            this.usuarioSeleccionado.setClave(nuevoUsuario.getClave());
 
         } else {
             if (this.jtf_nickname.getText().isEmpty()) {
@@ -1087,7 +1479,7 @@ public class PanelUsuario extends javax.swing.JPanel implements InterfacePanel {
             this.jlbl_mensaje.setText(mensaje);
         }
         if (nuevoUsuario != null) {
-            if (this.controlador.agregarUsuario(nuevoUsuario)) {
+            if (this.controlador.agregarUsuario(this.usuarioSeleccionado)) {
                 this.jlbl_mensaje.setText("");
 
                 //limpiar campos
@@ -1117,7 +1509,7 @@ public class PanelUsuario extends javax.swing.JPanel implements InterfacePanel {
                 int selectedRow = jtb_usuario.getSelectedRow();
                 Rectangle rect = jtb_usuario.getCellRect(selectedRow, 0, true);
                 jScrollPaneTabla.getViewport().scrollRectToVisible(rect);
-                crud = "";
+                this.crud = "buscar";
             } else {
                 this.jlbl_alertaNickName.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/png/16x16/delete.png")));
                 mensaje = mensaje + " *El USUARIO ya existe, ingrese uno valido";
@@ -1206,7 +1598,7 @@ public class PanelUsuario extends javax.swing.JPanel implements InterfacePanel {
                 int selectedRow = jtb_usuario.getSelectedRow();
                 Rectangle rect = jtb_usuario.getCellRect(selectedRow, 0, true);
                 jScrollPaneTabla.getViewport().scrollRectToVisible(rect);
-                crud = "";
+                this.crud = "buscar";
             } else {
                 this.jlbl_alertaPersonaAsociada.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/png/16x16/delete.png")));
                 mensaje = mensaje + " *El DNI ya existe, ingrese otro";
@@ -1221,46 +1613,34 @@ public class PanelUsuario extends javax.swing.JPanel implements InterfacePanel {
      *
      * @throws java.sql.SQLIntegrityConstraintViolationException
      */
-    public void eliminar() throws SQLIntegrityConstraintViolationException, SQLException {
+    public void eliminar() throws SQLIntegrityConstraintViolationException, SQLException, NonexistentEntityException {
 
-        try {
-            controlador.eliminarUsuario(usuarioSeleccionado);
-            this.jlbl_mensaje.setText("");
+        controlador.eliminarUsuario(usuarioSeleccionado);
+        //Actualizar el TableModel con la lista del controlador
+        this.tablaUsuarioModelo.setUsuarios(this.controlador.buscarTodosLosUsuarios());
 
-            //limpiar campos
-            //Actualizar el TableModel con la lista del controlador
-            this.tablaUsuarioModelo.setUsuarios(this.controlador.buscarTodosLosUsuarios());
+        //Refrescar el modelo en la tabla
+        this.tablaUsuarioModelo.fireTableDataChanged();
 
-            //Refrescar el modelo en la tabla
-            this.tablaUsuarioModelo.fireTableDataChanged();
+        limpiarTodosLosCampos();
+        habilitarTodosLosCampos(false);
+        habilitarTodosLosBotones(false);
 
-            limpiarTodosLosCampos();
-            habilitarTodosLosCampos(false);
-            habilitarTodosLosBotones(false);
+        this.validador.habilitarBoton(true, this.jbtn_agregar, new Color(30, 132, 73), Color.WHITE, null, null);
+        this.validador.habilitarBoton(true, this.jbtn_listar, new Color(30, 132, 73), Color.WHITE, null, null);
+        this.validador.habilitarCampo(true, this.jtf_buscarUsuario);
 
-            this.validador.habilitarBoton(true, this.jbtn_agregar, new Color(30, 132, 73), Color.WHITE, null, null);
-            this.validador.habilitarBoton(true, this.jbtn_listar, new Color(30, 132, 73), Color.WHITE, null, null);
-            this.validador.habilitarCampo(true, this.jtf_buscarUsuario);
+        this.usuarioSeleccionado = null;
 
-            this.jtb_usuario.setEnabled(true);
+        this.jtb_usuario.setEnabled(true);
 
-            this.usuarioSeleccionado = null;
+        this.jlbl_alertaNickName.setIcon(null);
+        this.jlbl_alertaPassword.setIcon(null);
+        this.jlbl_alertaConfirmarPassword.setIcon(null);
+        this.jlbl_alertaPersonaAsociada.setIcon(null);
+        this.jlbl_alertaEmpleadoAsociado.setIcon(null);
 
-            this.jtb_usuario.getSelectionModel().setSelectionInterval(this.tablaUsuarioModelo.getRowCount() - 1, this.tablaUsuarioModelo.getRowCount() - 1);
-            this.tablaUsuarioModelo.getValueAt(this.tablaUsuarioModelo.getRowCount() - 1, 0);
-
-            seleccionarUsuario();
-
-            int selectedRow = jtb_usuario.getSelectedRow();
-            Rectangle rect = jtb_usuario.getCellRect(selectedRow, 0, true);
-            jScrollPaneTabla.getViewport().scrollRectToVisible(rect);
-            crud = "";
-        } catch (NonexistentEntityException ex) {
-            //agregar mensaje que la persona esta asociada
-            JOptionPane.showConfirmDialog(null, "Posee registros asociados", "Error Eliminación", JOptionPane.CLOSED_OPTION, JOptionPane.QUESTION_MESSAGE);
-
-            //Logger.getLogger(PanelPersona.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.jlbl_mensaje.setText("");
 
     }
 

@@ -16,7 +16,6 @@ INSERT INTO `turnos01`.`tipotramite` (`ID`, `CODIGO`, `NOMBRE`) VALUES ('11', '0
 /* Tipo Persona*/
 INSERT INTO `turnos01`.`tipopersona` (`ID`, `DESCRIPCION`) VALUES ('1', 'Inscripto');
 INSERT INTO `turnos01`.`tipopersona` (`ID`, `DESCRIPCION`) VALUES ('2', 'Beneficiario');
-INSERT INTO `turnos01`.`tipopersona` (`ID`, `DESCRIPCION`) VALUES ('3', 'Publico en General');
 
 /* Tipo Empleado*/
 INSERT INTO `turnos01`.`tipoempleado` (`ID`, `DESCRIPCION`) VALUES ('1', 'Recepcionista');
@@ -38,7 +37,6 @@ INSERT INTO `turnos01`.`persona` (`ID`, `APELLIDO`, `DNI`, `NOMBRE`, `fk_organis
 INSERT INTO `turnos01`.`persona` (`ID`, `APELLIDO`, `DNI`, `NOMBRE`, `fk_organismo`, `fk_tipo_persona`) VALUES ('2', 'Betancur', '41700375', 'Damian', '1', '2');
 INSERT INTO `turnos01`.`persona` (`ID`, `APELLIDO`, `DNI`, `NOMBRE`, `fk_organismo`, `fk_tipo_persona`) VALUES ('3', 'Correa', '41600375', 'Gabriel', '1', '1');
 INSERT INTO `turnos01`.`persona` (`ID`, `APELLIDO`, `DNI`, `NOMBRE`, `fk_organismo`, `fk_tipo_persona`) VALUES ('4', 'Cuella', '41091019', 'Santiago', '1', '2');
-INSERT INTO `turnos01`.`persona` (`ID`, `APELLIDO`, `DNI`, `NOMBRE`, `fk_organismo`, `fk_tipo_persona`) VALUES ('5', 'Dos Santos', '39724912', 'Julian', '1', '3');
 
 /* Area*/
 INSERT INTO `turnos01`.`area` (`ID`, `nombre`, `numero`, `fk_organismo`) VALUES ('1', 'Contabilidad y Finanzas', '0001', '1');
@@ -194,22 +192,47 @@ INSERT INTO `turnos01`.`tipotramite_requisitoobligatorio` (`TipoTramite_ID`, `re
 
 
 /* Horario Atencion Turno */
-INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `HORATURNO`) VALUES ('1', '08:00');
-INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `HORATURNO`) VALUES ('2', '08:30');
-INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `HORATURNO`) VALUES ('3', '09:00');
-INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `HORATURNO`) VALUES ('4', '09:30');
-INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `HORATURNO`) VALUES ('5', '10:00');
-INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `HORATURNO`) VALUES ('6', '10:30');
-INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `HORATURNO`) VALUES ('7', '11:00');
-INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `HORATURNO`) VALUES ('8', '11:30');
-INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `HORATURNO`) VALUES ('9', '16:00');
-INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `HORATURNO`) VALUES ('10', '16:30');
-INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `HORATURNO`) VALUES ('11', '17:00');
-INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `HORATURNO`) VALUES ('12', '17:30');
-INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `HORATURNO`) VALUES ('13', '18:00');
-INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `HORATURNO`) VALUES ('14', '18:30');
-INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `HORATURNO`) VALUES ('15', '19:00');
-INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `HORATURNO`) VALUES ('16', '19:30');
+INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `DESCRIPCION`, `HORA`, `MINUTO`) VALUES ('1', '08:00', '8', '0');
+INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `DESCRIPCION`, `HORA`, `MINUTO`) VALUES ('2', '08:15', '8', '15');
+INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `DESCRIPCION`, `HORA`, `MINUTO`) VALUES ('3', '08:30', '8', '30');
+INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `DESCRIPCION`, `HORA`, `MINUTO`) VALUES ('4', '08:45', '8', '45');
+INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `DESCRIPCION`, `HORA`, `MINUTO`) VALUES ('5', '09:00', '9', '0');
+INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `DESCRIPCION`, `HORA`, `MINUTO`) VALUES ('6', '09:15', '9', '15');
+INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `DESCRIPCION`, `HORA`, `MINUTO`) VALUES ('7', '09:30', '9', '30');
+INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `DESCRIPCION`, `HORA`, `MINUTO`) VALUES ('8', '09:45', '9', '45');
+INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `DESCRIPCION`, `HORA`, `MINUTO`) VALUES ('9', '10:00', '10', '0');
+INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `DESCRIPCION`, `HORA`, `MINUTO`) VALUES ('10', '10:15', '10', '15');
+INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `DESCRIPCION`, `HORA`, `MINUTO`) VALUES ('11', '10:30', '10', '30');
+INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `DESCRIPCION`, `HORA`, `MINUTO`) VALUES ('12', '10:45', '10', '45');
+INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `DESCRIPCION`, `HORA`, `MINUTO`) VALUES ('13', '11:00', '11', '0');
+INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `DESCRIPCION`, `HORA`, `MINUTO`) VALUES ('14', '11:15', '11', '15');
+INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `DESCRIPCION`, `HORA`, `MINUTO`) VALUES ('15', '11:30', '11', '30');
+INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `DESCRIPCION`, `HORA`, `MINUTO`) VALUES ('16', '11:45', '11', '45');
+INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `DESCRIPCION`, `HORA`, `MINUTO`) VALUES ('17', '16:00', '16', '0');
+INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `DESCRIPCION`, `HORA`, `MINUTO`) VALUES ('18', '16:15', '16', '15');
+INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `DESCRIPCION`, `HORA`, `MINUTO`) VALUES ('19', '16:30', '16', '30');
+INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `DESCRIPCION`, `HORA`, `MINUTO`) VALUES ('20', '16:45', '16', '45');
+INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `DESCRIPCION`, `HORA`, `MINUTO`) VALUES ('21', '17:00', '17', '0');
+INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `DESCRIPCION`, `HORA`, `MINUTO`) VALUES ('22', '17:15', '17', '15');
+INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `DESCRIPCION`, `HORA`, `MINUTO`) VALUES ('23', '17:30', '17', '30');
+INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `DESCRIPCION`, `HORA`, `MINUTO`) VALUES ('24', '17:45', '17', '45');
+INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `DESCRIPCION`, `HORA`, `MINUTO`) VALUES ('25', '18:00', '18', '0');
+INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `DESCRIPCION`, `HORA`, `MINUTO`) VALUES ('26', '18:15', '18', '15');
+INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `DESCRIPCION`, `HORA`, `MINUTO`) VALUES ('27', '18:30', '18', '30');
+INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `DESCRIPCION`, `HORA`, `MINUTO`) VALUES ('28', '18:45', '18', '45');
+INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `DESCRIPCION`, `HORA`, `MINUTO`) VALUES ('29', '19:00', '19', '0');
+INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `DESCRIPCION`, `HORA`, `MINUTO`) VALUES ('30', '19:15', '19', '15');
+INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `DESCRIPCION`, `HORA`, `MINUTO`) VALUES ('31', '19:30', '19', '30');
+INSERT INTO `turnos01`.`horarioatencionturno` (`ID`, `DESCRIPCION`, `HORA`, `MINUTO`) VALUES ('32', '19:45', '19', '45');
+
+
+
+
+
+
+
+
+
 
 /* Turno*/
 INSERT INTO `turnos01`.`turno` (`ID`, `FECHA`, `fk_area`, `fk_empleado`, `fk_estado_turno`, `fk_tipo_atencion`, `fk_Tipo_Tramite`, `fk_hora_turno`, `fk_persona`) VALUES ('1', '2020/01/08', '1', '1', '1', '1', '1', '1', '1');

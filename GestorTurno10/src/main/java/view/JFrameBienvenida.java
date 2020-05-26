@@ -114,9 +114,9 @@ public class JFrameBienvenida extends javax.swing.JFrame {
                             text.setText("Acceso Autorizado");
                             break;
                         case 60:
-                            
+                            JFrameBienvenida.this.setVisible(false);
                             JFramePrincipal sistema = new JFramePrincipal();                           
-                            sistema.arranca();
+                            sistema.arranca();                            
                             JFrameBienvenida.this.dispose();
                             break;
 
